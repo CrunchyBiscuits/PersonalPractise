@@ -187,34 +187,94 @@ namespace PersonalPractise
         // 面试金典1.7 https://leetcode-cn.com/problems/rotate-matrix-lcci/
         public void Rotate(int[][] matrix)
         {
-            for(int i = 0; i < matrix[0].Length-1; i++)
+            //int x = 0, y = i;
+            //int newX = matrix[i].Length-1-y, newY = x;
+
+            //int temp = matrix[x][y];
+            //matrix[x][y] = matrix[newX][newY];
+
+            //x = newX;
+            //y = newY;
+
+            //newX = matrix[i].Length - 1 - y;
+            //newY = x;
+            //matrix[x][y] = matrix[newX][newY];
+
+            //x = newX;
+            //y = newY;
+
+            //newX = matrix[i].Length - 1 - y;
+            //newY = x;
+            //matrix[x][y] = matrix[newX][newY];
+
+            //matrix[newX][newY] = temp;
+            int N = matrix[0].Length;
+            for(int i = 0; i < N/2; i++)
             {
-                int x = 0, y = i;
-                int newX = matrix[i].Length-1-y, newY = x;
+                for(int j = 0; j < (N + 1) / 2; j++)
+                {
+                    int temp = matrix[i][j];
+                    matrix[i][j] = matrix[N-1-j][i];
+                    matrix[N - 1 - j][i] = matrix[N - 1 - i][N - 1 - j];
+                    matrix[N - 1 - i][N - 1 - j] = matrix[j][N - 1 - i];
+                    matrix[j][N - 1 - i] = temp;
+                }
 
-                int temp = matrix[x][y];
-                matrix[x][y] = matrix[newX][newY];
-
-                x = newX;
-                y = newY;
-
-                newX = matrix[i].Length - 1 - y;
-                newY = x;
-                matrix[x][y] = matrix[newX][newY];
-
-                x = newX;
-                y = newY;
-
-                newX = matrix[i].Length - 1 - y;
-                newY = x;
-                matrix[x][y] = matrix[newX][newY];
-
-                matrix[newX][newY] = temp;
             }
         }
 
-        // 面试金典1.8
+        // 面试金典1.8 https://leetcode-cn.com/problems/zero-matrix-lcci/
+        public void SetZeroes(int[][] matrix)
+        {
+            bool[] row = new bool[matrix.Length];
+            bool[] column = new bool[matrix[0].Length];
 
-        // 面试金典1.9
+            for(int i = 0; i < row.Length; i++)
+            {
+                for(int j = 0; j < column.Length; j++)
+                {
+                    if(matrix[i][j] == 0)
+                    {
+                        row[i] = true;
+                        column[j] = true;
+                    }
+                }
+            }
+
+            for(int i = 0; i < row.Length; i++)
+            {
+                if (row[i])
+                {
+                    for (int j = 0; j < column.Length; j++)
+                    {
+                        matrix[i][j] = 0;
+                    }
+                }
+            }
+
+            for(int j=0; j< column.Length; j++)
+            {
+                if (column[j])
+                {
+                    for (int i = 0; i < row.Length; i++)
+                    {
+                        matrix[i][j] = 0;
+                    }
+                }
+            }
+        }
+
+        // 面试金典1.9 https://leetcode-cn.com/problems/string-rotation-lcci/
+        public bool IsFlipedString(string s1, string s2)
+        {
+            if (s1.Length != s2.Length)
+                return false;
+            if (string.IsNullOrEmpty(s1) && string.IsNullOrEmpty(s2))
+                return true;
+            string doubleS2 = s2 + s2;
+            if (doubleS2.Contains(s1))
+                return true;
+            return false;
+        }
     }
 }
