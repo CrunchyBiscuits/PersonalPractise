@@ -8,6 +8,7 @@ namespace PersonalPractise
     {
         public static void Main(string[] args)
         {
+            OneEditAway("teacher", "taches");
 
         }
 
@@ -101,5 +102,52 @@ namespace PersonalPractise
             }
             return one <= 1;
         }
+
+        // 面试金典1.5 https://leetcode-cn.com/problems/one-away-lcci/
+        public static bool OneEditAway(string first, string second)
+        {
+            if (first.Length == second.Length)
+            {
+                var diffCount = 0;
+                for (int i = 0; i < first.Length; i++)
+                {
+                    if (first[i] != second[i])
+                        diffCount++;
+                    if (diffCount > 1)
+                        return false;
+                }
+            }else if (Math.Abs(first.Length - second.Length) > 1)
+                return false;
+            else
+            {
+                int index1 = 0;
+                int index2 = 0;
+                int count = 0;
+                while(index1<first.Length && index2 < second.Length)
+                {
+                    Console.WriteLine(first[index1] +"," + second[index2]);
+                    if (first[index1] != second[index2])
+                    {
+                        if (first.Length > second.Length)
+                            index1++;
+                        else
+                            index2++;
+                        count++;
+                    }
+                    else
+                    {
+                        index1++;
+                        index2++;
+                    }
+                    if (count > 1)
+                        return false;
+                }
+            }
+
+            return true;
+        }
+
+        // 面试金典1.6 https://leetcode-cn.com/problems/compress-string-lcci/
+
     }
 }
