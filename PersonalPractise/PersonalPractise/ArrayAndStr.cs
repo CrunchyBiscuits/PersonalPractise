@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace PersonalPractise
 {
@@ -8,7 +9,7 @@ namespace PersonalPractise
     {
         public static void Main(string[] args)
         {
-            OneEditAway("teacher", "taches");
+
 
         }
 
@@ -148,6 +149,72 @@ namespace PersonalPractise
         }
 
         // 面试金典1.6 https://leetcode-cn.com/problems/compress-string-lcci/
+        public string CompressString(string S)
+        {
+            if (S.Length == 0)
+                return "";
+            StringBuilder sbuilder = new StringBuilder();
+            int count = 1, index = 0;
 
+            while (index < S.Length)
+            {
+                if(index == S.Length - 1)
+                {
+                    sbuilder.Append(S[index]);
+                    sbuilder.Append(count);
+                    count = 1;
+                }
+                else if(S[index] == S[index + 1])
+                {
+                    count++;
+                }
+                else
+                {
+                    sbuilder.Append(S[index]);
+                    sbuilder.Append(count);
+                    count = 1;
+                }
+                index++;
+            }
+
+
+
+            string answer = sbuilder.ToString();
+
+            return S.Length > answer.Length ? answer : S;
+        }
+
+        // 面试金典1.7 https://leetcode-cn.com/problems/rotate-matrix-lcci/
+        public void Rotate(int[][] matrix)
+        {
+            for(int i = 0; i < matrix[0].Length-1; i++)
+            {
+                int x = 0, y = i;
+                int newX = matrix[i].Length-1-y, newY = x;
+
+                int temp = matrix[x][y];
+                matrix[x][y] = matrix[newX][newY];
+
+                x = newX;
+                y = newY;
+
+                newX = matrix[i].Length - 1 - y;
+                newY = x;
+                matrix[x][y] = matrix[newX][newY];
+
+                x = newX;
+                y = newY;
+
+                newX = matrix[i].Length - 1 - y;
+                newY = x;
+                matrix[x][y] = matrix[newX][newY];
+
+                matrix[newX][newY] = temp;
+            }
+        }
+
+        // 面试金典1.8
+
+        // 面试金典1.9
     }
 }
