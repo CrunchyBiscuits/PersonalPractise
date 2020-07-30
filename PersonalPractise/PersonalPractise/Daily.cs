@@ -49,5 +49,23 @@ namespace PersonalPractise
             var rigthVal = 1 + MaxDepth(root.right);
             return leftVal>rigthVal?leftVal:rigthVal;
         }
+
+        //NUM343 https://leetcode-cn.com/problems/integer-break/
+        public int IntegerBreak(int n)
+        {
+            int[] allN = new int[n + 1];
+            allN[0] = allN[1] = 0;
+            for(int i = 2; i <= n; i++)
+            {
+                int temp = 0;
+                for(int j = 1; j < i; j++)
+                {
+                    temp = Math.Max(temp, Math.Max(j * (i - j), j * allN[i - j]));
+                }
+                allN[i] = temp;
+            }
+
+            return allN[n];
+        }
     }
 }
