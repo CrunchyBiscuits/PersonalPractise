@@ -7,12 +7,6 @@ namespace PersonalPractise
 {
     class ArrayAndStr
     {
-        public static void Main(string[] args)
-        {
-
-
-        }
-
         // 面试金典1.1 https://leetcode-cn.com/problems/is-unique-lcci/submissions/
         public bool IsUnique(string astr)
         {
@@ -245,37 +239,37 @@ namespace PersonalPractise
         // 面试金典1.8 https://leetcode-cn.com/problems/zero-matrix-lcci/
         public void SetZeroes(int[][] matrix)
         {
-            bool[] row = new bool[matrix.Length];
-            bool[] column = new bool[matrix[0].Length];
+            bool[] y = new bool[matrix.Length];
+            bool[] x = new bool[matrix[0].Length];
 
-            for(int i = 0; i < row.Length; i++)
+            for(int i = 0; i < y.Length; i++)
             {
-                for(int j = 0; j < column.Length; j++)
+                for(int j = 0; j < x.Length; j++)
                 {
                     if(matrix[i][j] == 0)
                     {
-                        row[i] = true;
-                        column[j] = true;
+                        y[i] = true;
+                        x[j] = true;
                     }
                 }
             }
 
-            for(int i = 0; i < row.Length; i++)
+            for(int i = 0; i < y.Length; i++)
             {
-                if (row[i])
+                if (y[i])
                 {
-                    for (int j = 0; j < column.Length; j++)
+                    for (int j = 0; j < x.Length; j++)
                     {
                         matrix[i][j] = 0;
                     }
                 }
             }
 
-            for(int j=0; j< column.Length; j++)
+            for(int j=0; j< x.Length; j++)
             {
-                if (column[j])
+                if (x[j])
                 {
-                    for (int i = 0; i < row.Length; i++)
+                    for (int i = 0; i < y.Length; i++)
                     {
                         matrix[i][j] = 0;
                     }
