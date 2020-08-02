@@ -57,12 +57,11 @@ namespace PersonalPractise
             allN[0] = allN[1] = 0;
             for(int i = 2; i <= n; i++)
             {
-                int temp = 0;
                 for(int j = 1; j < i; j++)
                 {
-                    temp = Math.Max(temp, Math.Max(j * (i - j), j * allN[i - j]));
+                    allN[i] = Math.Max(allN[i], Math.Max(j * (i - j), j * allN[i - j]));
                 }
-                allN[i] = temp;
+                
             }
 
             return allN[n];

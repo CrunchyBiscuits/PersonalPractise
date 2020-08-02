@@ -47,12 +47,31 @@ namespace PersonalPractise
         // 面试金典1.2 https://leetcode-cn.com/problems/check-permutation-lcci/
         public bool CheckPermutation(string s1, string s2)
         {
-            var _s1 = s1.ToList();
-            var _s2 = s2.ToList();
+            //var _s1 = s1.ToList();
+            //var _s2 = s2.ToList();
 
-            _s1.Sort();
-            _s2.Sort();
-            return new String(_s1.ToArray()) == new string(_s2.ToArray());
+            //_s1.Sort();
+            //_s2.Sort();
+            //return new String(_s1.ToArray()) == new string(_s2.ToArray());
+            if (s1.Length != s2.Length)
+            {
+                return false;
+            }
+            int[] char_set = new int[128];
+            for (int i = 0; i < s1.Length; i++)
+            {
+                char_set[s1[i]]++;
+            }
+
+            for (int j = 0; j < s2.Length; j++)
+            {
+                char_set[s2[j]]--;
+                if (char_set[s2[j]] < 0)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         // 面试金典1.3 https://leetcode-cn.com/problems/string-to-url-lcci/
