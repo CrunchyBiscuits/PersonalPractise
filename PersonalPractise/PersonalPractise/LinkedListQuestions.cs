@@ -14,17 +14,17 @@ namespace PersonalPractise
     class LinkedListQuestions
     {
 
-        public static void Main(string[] args)
-        {
-            LinkedListQuestions a = new LinkedListQuestions();
-            ListNode b = new ListNode(1);
-            b.next = new ListNode(1);
-            b.next.next = new ListNode(2);
+        //public static void Main(string[] args)
+        //{
+        //    LinkedListQuestions a = new LinkedListQuestions();
+        //    ListNode b = new ListNode(1);
+        //    b.next = new ListNode(1);
+        //    b.next.next = new ListNode(2);
 
 
-            Console.WriteLine(a.RemoveDuplicateNodes(b).val);
-            Console.WriteLine(a.RemoveDuplicateNodes(b).next.val);
-        }
+        //    Console.WriteLine(a.RemoveDuplicateNodes(b).val);
+        //    Console.WriteLine(a.RemoveDuplicateNodes(b).next.val);
+        //}
 
         // 面试金典2.1 https://leetcode-cn.com/problems/remove-duplicate-node-lcci/
         public ListNode RemoveDuplicateNodes(ListNode head)
