@@ -7,12 +7,9 @@ namespace PersonalPractise
 {
     class StackAndQueue
     {
-        public static void Main(String[] args)
-        {
 
-        }
 
-        
+
     }
 
     // 面试金典3.1 https://leetcode-cn.com/problems/three-in-one-lcci/
@@ -172,3 +169,4 @@ namespace PersonalPractise
             }
         }
     }
+}
