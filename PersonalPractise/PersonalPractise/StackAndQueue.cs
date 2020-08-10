@@ -9,7 +9,6 @@ namespace PersonalPractise
     {
 
 
-
     }
 
     // 面试金典3.1 https://leetcode-cn.com/problems/three-in-one-lcci/
@@ -167,6 +166,43 @@ namespace PersonalPractise
                 else
                     return -1;
             }
+        }
+    }
+
+    // 面试金典3.4 https://leetcode-cn.com/problems/implement-queue-using-stacks-lcci/
+    public class MyQueue
+    {
+        private Stack<int> store;
+        private Stack<int> temp;
+        /** Initialize your data structure here. */
+        public MyQueue()
+        {
+            this.store = new Stack<int>();
+            this.temp = new Stack<int>();
+        }
+
+        /** Push element x to the back of queue. */
+        public void Push(int x)
+        {
+
+        }
+
+        /** Removes the element from in front of queue and returns that element. */
+        public int Pop()
+        {
+
+        }
+
+        /** Get the front element. */
+        public int Peek()
+        {
+
+        }
+
+        /** Returns whether the queue is empty. */
+        public bool Empty()
+        {
+
         }
     }
 }

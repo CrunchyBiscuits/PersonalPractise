@@ -6,58 +6,32 @@ namespace PersonalPractise
 {
     class WeeklyComp
     {
-        public static void Main(String[] args)
-        {
-            WeeklyComp a = new WeeklyComp();
-            Console.WriteLine(a.MakeGood("abBAcC"));
-        }
+        //public static void Main(String[] args)
+        //{
+
+        //}
 
 
         // 201 周赛 5483
         public string MakeGood(string s)
         {
-            if (s.Length < 2 || s.Length > 100) return s;
-            string result = s;
-            bool flag = true;
-            while (flag)
+            StringBuilder sb = new StringBuilder(s);
+            int len = -1;
+            while(len != sb.Length)
             {
-                result = cal(result);
-                flag = CheckFinish(result);
-            }
-
-            return result;
-        }
-        public bool CheckFinish(string s)
-        {
-            for (int i = 0; i < s.Length - 1 ; i++)
-            {
-                if (s[i] + 32 == s[i + 1] || s[i] - 32 == s[i + 1])
+                len = sb.Length;
+                for(int i = 0; i < sb.Length - 1; i++)
                 {
-                    return true;
+                    if(Math.Abs(sb[i] - sb[i+1]) == 'a' - 'A')
+                    {
+                        sb.Remove(i, 2);
+                        break;
+                    }
                 }
             }
-            return false;
+            return sb.ToString();
         }
-
-        public string cal(string s) 
-        {
-            int index = 0;
-            string result = "";
-            for (int i = 0; i < s.Length - 2; i++)
-            {
-                if (s[index] + 32 == s[index + 1] || s[index] - 32 == s[index + 1])
-                {
-                    index += 2;
-                }
-                else
-                {
-                    result += s[index];
-                    index++;
-                }
-            }
-            return result;
-        }
-
+       
         // 201 周赛 5484
         public char FindKthBit(int n, int k)
         {
