@@ -173,36 +173,68 @@ namespace PersonalPractise
     public class MyQueue
     {
         private Stack<int> store;
-        private Stack<int> temp;
+        private Stack<int> helper;
         /** Initialize your data structure here. */
         public MyQueue()
         {
             this.store = new Stack<int>();
-            this.temp = new Stack<int>();
+            this.helper = new Stack<int>();
         }
 
         /** Push element x to the back of queue. */
         public void Push(int x)
         {
-
+            store.Push(x);
         }
 
         /** Removes the element from in front of queue and returns that element. */
         public int Pop()
         {
+            if (store.Count == 0)
+                return -1;
 
+
+            while (store.Count > 0)
+            {
+                helper.Push(store.Pop());
+            }
+
+            int ans = helper.Pop();
+
+            while (helper.Count > 0)
+            {
+                store.Push(helper.Pop());
+            }
+
+            return ans;
         }
 
         /** Get the front element. */
         public int Peek()
         {
+            if (store.Count == 0)
+                return -1;
 
+            while (store.Count > 0) 
+            { 
+                    helper.Push(store.Pop());
+            }
+            
+
+            int ans = helper.Peek();
+
+            while (helper.Count>0)
+            {
+                store.Push(helper.Pop());
+            }
+
+            return ans;
         }
 
         /** Returns whether the queue is empty. */
         public bool Empty()
         {
-
+            return store.Count == 0;
         }
     }
 }
