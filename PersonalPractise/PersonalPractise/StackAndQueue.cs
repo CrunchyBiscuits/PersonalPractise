@@ -237,4 +237,141 @@ namespace PersonalPractise
             return store.Count == 0;
         }
     }
+
+    // 面试金典3.5 https://leetcode-cn.com/problems/sort-of-stacks-lcci/
+    public class SortedStack
+    {
+        Stack<int> store;
+        Stack<int> helper;
+
+        public SortedStack()
+        {
+            this.store = new Stack<int>();
+            this.helper = new Stack<int>();
+        }
+
+        public void Push(int val)
+        {
+            int maxVal = store.Count == 0 ? int.MaxValue : store.Peek();
+            int minVal = helper.Count == 0 ? int.MinValue : helper.Peek();
+
+            while (true)
+            {
+                if (val > maxVal && store.Count > 0)
+                {
+                    helper.Push(store.Pop());
+                }
+                else if (val < minVal && helper.Count > 0)
+                {
+                    store.Push(helper.Pop());
+                }
+                else
+                    break;
+            }
+            store.Push(val);
+        }
+
+        public void Pop()
+        {
+            while (helper.Count>0)
+            {
+                store.Push(helper.Pop());
+            }
+
+            if(store.Count > 0)
+                store.Pop();
+        }
+
+        public int Peek()
+        {
+            while (helper.Count > 0)
+            {
+                store.Push(helper.Pop());
+            }
+
+            if (store.Count > 0)
+                return store.Peek();
+            else
+                return -1;
+        }
+
+        public bool IsEmpty()
+        {
+            return store.Count == 0 && helper.Count == 0;
+        }
+    }
+
+    // 面试金典3.6 https://leetcode-cn.com/problems/animal-shelter-lcci/
+    public class AnimalShelf
+    {
+        LinkedList<int[]> all;
+        public AnimalShelf()
+        {
+            all = new LinkedList<int[]>();
+        }
+
+        public void Enqueue(int[] animal)
+        {
+            all.AddLast(animal);
+        }
+
+        public int[] DequeueAny()
+        {
+            if (all.Count > 0)
+            {
+                int[] ans = all.First.Value;
+                all.RemoveFirst();
+                return ans;
+            }
+            else
+                return new int[] { -1, -1 };
+        }
+
+        public int[] DequeueDog()
+        {
+            if (all.Count > 0)
+            {
+            LinkedListNode<int[]> node = all.First;
+            while (true)
+            {
+                if (node.Value[1] == 1)
+                {
+                    all.Remove(node);
+                    return node.Value;
+                }
+                else
+                {
+                    if (node.Next == null)
+                        return new int[] { -1, -1 };
+                    node = node.Next;
+                }
+            }
+        }else
+                return new int[] { -1, -1 };
+        }
+
+        public int[] DequeueCat()
+        {
+            if (all.Count > 0)
+            {
+                LinkedListNode<int[]> node = all.First;
+                while (true)
+                {
+                    if (node.Value[1] == 0)
+                    {
+                        all.Remove(node);
+                        return node.Value;
+                    }
+                    else
+                    {
+                        if (node.Next == null)
+                            return new int[] { -1, -1 };
+                        node = node.Next;
+                    }
+                }
+            }
+            else
+                return new int[] { -1, -1 };
+        }
+    }
 }
