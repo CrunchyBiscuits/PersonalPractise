@@ -7,9 +7,8 @@ namespace PersonalPractise
 {
     class TreeAndGraph
     {
-
-         // 面试金典 4.1 https://leetcode-cn.com/problems/route-between-nodes-lcci/
-         public bool FindWhetherExistsPath(int n, int[][] graph, int start, int target)
+        // 面试金典 4.1 https://leetcode-cn.com/problems/route-between-nodes-lcci/
+        public bool FindWhetherExistsPath(int n, int[][] graph, int start, int target)
         {
             HashSet<int> visited = new HashSet<int>();
             Queue<int> frontier = new Queue<int>();
@@ -55,5 +54,28 @@ namespace PersonalPractise
 
             return answer;
         }
+
+        // 面试金典 4.2 https://leetcode-cn.com/problems/minimum-height-tree-lcci/
+        public TreeNode SortedArrayToBST(int[] nums)
+        {
+            return helper(nums, 0, nums.Length - 1);
+        }
+
+        TreeNode helper(int[] nums, int start, int end)
+        {
+            if (start > end) return null;
+
+            int mid = (end - start) / 2 + start;
+            TreeNode root = new TreeNode(nums[mid]);
+            root.left = helper(nums, start, mid - 1);
+            root.right = helper(nums, mid + 1, end);
+            return root;
+        }
+
+        // 面试金典 4.3 https://leetcode-cn.com/problems/list-of-depth-lcci/
+        //public ListNode[] ListOfDepth(TreeNode tree)
+        //{
+
+        //}
     }
 }
