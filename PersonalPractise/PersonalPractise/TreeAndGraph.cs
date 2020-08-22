@@ -176,10 +176,89 @@ namespace PersonalPractise
         }
 
         // 面试金典 4.8 https://leetcode-cn.com/problems/first-common-ancestor-lcci/
-        //public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+        public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+        {
+            if (root == null) return null;
+
+            if (root == p || root == q) return root;
+
+            TreeNode left = LowestCommonAncestor(root.left, p, q);
+            TreeNode right = LowestCommonAncestor(root.right, p, q);
+
+            if (left != null && right != null) return root;
+            else if (left == null) return right;
+            else if (right == null) return left;
+
+            return null;
+        }
+
+        public bool HasNode(TreeNode root, TreeNode x)
+        {
+            if (root == null) return false;
+            if (root == x) return true;
+            return HasNode(root.left, x) || HasNode(root.right, x);
+        }
+
+        // 面试金典 4.9 https://leetcode-cn.com/problems/bst-sequences-lcci/
+        //public IList<IList<int>> BSTSequences(TreeNode root)
         //{
 
         //}
 
+        // 面试金典 4.10 https://leetcode-cn.com/problems/check-subtree-lcci/
+        public bool CheckSubTree(TreeNode t1, TreeNode t2)
+        {
+            StringBuilder t1Builder = new StringBuilder();
+            StringBuilder t2Builder = new StringBuilder();
+
+            preOrderTravel(t1, t1Builder);
+            preOrderTravel(t2, t2Builder);
+
+            string t1Str = t1Builder.ToString();
+            string t2Str = t2Builder.ToString();
+
+            return t1Str.Contains(t2Str);
+        }
+
+        public void preOrderTravel(TreeNode node, StringBuilder builder)
+        {
+            if (node == null) builder.Append(" ");
+            else
+            {
+                builder.Append(node.val);
+                preOrderTravel(node.left, builder);
+                preOrderTravel(node.right, builder);
+            }
+        }
+
+        // 面试金典 4.12 https://leetcode-cn.com/problems/paths-with-sum-lcci/
+        public int PathSum(TreeNode root, int sum)
+        {
+            if (root == null) return 0;
+            int rootPaht = countPath(root, 0, sum);
+
+            int rightPath = PathSum(root.right, sum);
+            int leftPath = PathSum(root.left, sum);
+
+
+            return rootPaht + rightPath + leftPath;
+        }
+
+        public int countPath(TreeNode tree, int total, int sum)
+        {
+            if (tree == null) return 0;
+
+            int allPaths = 0;
+
+            total += tree.val;
+            if(total == sum)
+            {
+                allPaths++;
+            }
+
+            allPaths += countPath(tree.left, total, sum);
+            allPaths += countPath(tree.right, total, sum);
+            return allPaths;
+        }
     }
 }
