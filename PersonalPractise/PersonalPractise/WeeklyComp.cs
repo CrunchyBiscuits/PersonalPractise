@@ -6,10 +6,12 @@ namespace PersonalPractise
 {
     class WeeklyComp
     {
-        //public static void Main(String[] args)
-        //{
-
-        //}
+        public static void Main(String[] args)
+        {
+            WeeklyComp a = new WeeklyComp();
+            int[] b = { 3,1,5,4,2};
+            a.FindLatestStep(b,2);
+        }
 
 
         // 201 周赛 5483
@@ -140,6 +142,164 @@ namespace PersonalPractise
             }
 
             return Math.Max(ans1, ans2);
+        }
+
+        // 203 周赛5495
+        public IList<int> MostVisited(int n, int[] rounds)
+        {
+            IList<int> result = new List<int>();
+            int[] temp = new int[n];
+            int large = int.MinValue;
+
+            for(int m = 1; m < rounds.Length; m++)
+            {
+                int start = rounds[m - 1];
+                int end = rounds[m];
+                if (m == 1)
+                {
+                    if(end < start)
+                    {
+                        for (int j = start; j <= n; j++)
+                        {
+                            temp[j - 1]++;
+                            if (temp[j - 1] > large)
+                            {
+                                large = temp[j - 1];
+                            }
+                        }
+                        for (int j = 1; j <= end; j++)
+                        {
+                            temp[j - 1]++;
+                            if (temp[j - 1] > large)
+                            {
+                                large = temp[j - 1];
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int j = start; j <= end; j++)
+                        {
+                            temp[j - 1]++;
+                            if (temp[j - 1] > large)
+                            {
+                                large = temp[j - 1];
+                            }
+                        }
+                    }
+
+                }
+                else
+                {
+                    if (end < start)
+                    {
+                        for (int j = start+1; j <= n; j++)
+                        {
+                            temp[j - 1]++;
+                            if (temp[j - 1] > large)
+                            {
+                                large = temp[j - 1];
+                            }
+                        }
+                        for (int j = 1; j <= end; j++)
+                        {
+                            temp[j - 1]++;
+                            if (temp[j - 1] > large)
+                            {
+                                large = temp[j - 1];
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int j = start+1; j <= end; j++)
+                        {
+                            temp[j - 1]++;
+                            if (temp[j - 1] > large)
+                            {
+                                large = temp[j - 1];
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            for(int i = 0; i < temp.Length; i++)
+            {
+                Console.WriteLine(temp[i]);
+                if (temp[i] == large)
+                {
+                    result.Add(i + 1);
+                }
+            }
+
+            return result;
+        }
+
+        // 203 周赛5496
+        public int MaxCoins(int[] piles)
+        {
+            int rounds = piles.Length / 3;
+            int total = 0;
+
+            Array.Sort(piles);
+            int index = piles.Length-2;
+            for (int i = 0;i<rounds;i++)
+            {
+                total += piles[index];
+                index -= 2;
+            }
+
+            return total;
+        }
+
+        // 203 周赛5497
+        public int FindLatestStep(int[] arr, int m)
+        {
+            int size = int.MinValue;
+            StringBuilder wholeString = new StringBuilder();
+            StringBuilder testCase = new StringBuilder();
+            for(int i = 0; i < m; i++)
+            {
+                testCase.Append("1");
+            }
+
+            for(int i = 0; i < arr.Length; i++)
+            {
+                if(arr[i]>size)
+                {
+                    size = arr[i];
+                }
+            }
+
+            for (int i = 0; i < size; i++)
+            {
+                wholeString.Append("0");
+            }
+
+            int ans = -1;
+            string temp = wholeString.ToString();
+            string request = testCase.ToString();
+
+            for (int i = 0; i < size; i++)
+            {
+                int index = arr[i]-1;
+                char[] chars = temp.ToCharArray();
+                chars[index] = '1';
+                temp = new string(chars);
+                string[] strs = temp.Split("0");
+                for(int j = 0; j < strs.Length; j++)
+                {
+                    if (strs[j].Equals(request))
+                    {
+                        ans = i+1;
+                    }
+                }
+               
+            }
+
+            return ans;
         }
     }
 }
