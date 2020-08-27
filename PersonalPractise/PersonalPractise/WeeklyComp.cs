@@ -6,12 +6,12 @@ namespace PersonalPractise
 {
     class WeeklyComp
     {
-        public static void Main(String[] args)
-        {
-            WeeklyComp a = new WeeklyComp();
-            int[] b = { 3,1,5,4,2};
-            a.FindLatestStep(b,2);
-        }
+        //public static void Main(String[] args)
+        //{
+        //    WeeklyComp a = new WeeklyComp();
+        //    int[] b = { 3,1,5,4,2};
+        //    a.FindLatestStep(b,2);
+        //}
 
 
         // 201 周赛 5483
