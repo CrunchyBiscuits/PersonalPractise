@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace PersonalPractise
 {
     class WeeklyComp
     {
-        //public static void Main(String[] args)
-        //{
-        //    WeeklyComp a = new WeeklyComp();
-        //    int[] b = { 3,1,5,4,2};
-        //    a.FindLatestStep(b,2);
-        //}
+        public static void Main(String[] args)
+        {
+            WeeklyComp a = new WeeklyComp();
+            int[] b = { 2,2};
+            Console.WriteLine(a.ContainsPattern(b,1,2));
+        }
 
 
         // 201 周赛 5483
@@ -301,5 +302,40 @@ namespace PersonalPractise
 
             return ans;
         }
+
+        // 204 周赛5499
+        public bool ContainsPattern(int[] arr, int m, int k)
+        {
+            if (arr.Length < m * k) return false;
+            for(int i = 0; i < (arr.Length-m*k)+1; i++)
+            {
+                bool find = true;
+                for (int j = 0; j < m; j++)
+                {
+                    int currentIndex = i + j;
+                    int current = arr[currentIndex];
+                    for (int e = 1; e < k; e++)
+                    {
+                        if (arr[currentIndex+e*m]!=current)
+                        {
+                            find = false;
+                        }
+                    }
+                }
+                if (find)
+                {
+                    return true;
+                }
+            }
+            return false ;
+        }
+
+        // 205 周赛5500
+        public int GetMaxLen(int[] nums)
+        {
+
+        }
+
+        // 206 周赛5501
     }
 }

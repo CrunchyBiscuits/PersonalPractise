@@ -7,15 +7,15 @@ namespace PersonalPractise
 
     class BitwiseOperation
     {
-        public static void Main(string[] args)
-        {
-            BitwiseOperation a = new BitwiseOperation();
-            int[] ans = a.FindClosedNumbers(2);
-            foreach (var item in ans)
-            {
-                Console.WriteLine(item);
-            }
-        }
+        //public static void Main(string[] args)
+        //{
+        //    BitwiseOperation a = new BitwiseOperation();
+        //    int[] ans = a.FindClosedNumbers(2);
+        //    foreach (var item in ans)
+        //    {
+        //        Console.WriteLine(item);
+        //    }
+        //}
         // 面试金典 5.1
         public int InsertBits(int N, int M, int i, int j)
         {

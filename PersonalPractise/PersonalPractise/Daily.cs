@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PersonalPractise
@@ -65,6 +66,27 @@ namespace PersonalPractise
             }
 
             return allN[n];
+        }
+
+        //NUM557 https://leetcode-cn.com/problems/reverse-words-in-a-string-iii/
+        public string ReverseWords(string s)
+        {
+            string[] strs = s.Split(" ");
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < strs.Length; i++)
+            {
+                char[] temp = strs[i].ToCharArray();
+                Array.Reverse(temp);
+                if (i == strs.Length - 1)
+                {
+                    sb.Append(new string(temp));
+                }
+                else
+                {
+                    sb.Append(new string(temp) + " ");
+                }
+            }
+            return sb.ToString();
         }
     }
 }
