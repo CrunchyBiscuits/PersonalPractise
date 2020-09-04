@@ -260,5 +260,22 @@ namespace PersonalPractise
             allPaths += countPath(tree.right, total, sum);
             return allPaths;
         }
+
+        static TreeNode head = new TreeNode(0);
+        TreeNode shadow = head;
+        // 面试金典 17.12
+        public TreeNode ConvertBiNode(TreeNode root)
+        {
+            if (root == null)
+            {
+                return null;
+            }
+            ConvertBiNode(root.left);
+            root.left = null;
+            shadow.right = root;
+            shadow = shadow.right;
+            ConvertBiNode(root.right);
+            return head.right;
+        }
     }
 }

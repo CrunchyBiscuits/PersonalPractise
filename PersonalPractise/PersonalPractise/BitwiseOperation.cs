@@ -147,5 +147,17 @@ namespace PersonalPractise
 
             return (int)(oddNum | evenNum);
         }
+
+        // 面试金典 17.01
+        public int Add(int a, int b)
+        {
+            while (b != 0)
+            {
+                int temp = (int)((a & b) << 1);
+                a ^= b;
+                b = temp;
+            }
+            return a;
+        }
     }
 }

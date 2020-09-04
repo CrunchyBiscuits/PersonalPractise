@@ -331,10 +331,10 @@ namespace PersonalPractise
         }
 
         // 205 周赛5500
-        public int GetMaxLen(int[] nums)
-        {
+        //public int GetMaxLen(int[] nums)
+        //{
 
-        }
+        //}
 
         // 206 周赛5501
     }

@@ -6,14 +6,22 @@ namespace PersonalPractise
 {
     class SortAndFind
     {
+        // 面试金典 10.01
         public void Merge(int[] A, int m, int[] B, int n)
         {
-            for(int i = 0; i < n; i++)
+            for (int j = 0; j < B.Length; j++)
             {
-                int insertNum = B[i];
-                for(int j = 0; j < A.Length; j++)
+                for (int i = A.Length - 1; i >=0 ; i--)
                 {
-
+                    if (B[j]<=A[i])
+                    {
+                        for (int k = A.Length - 1; k >= i; k--)
+                        {
+                            A[k] = A[k - 1];
+                        }
+                        A[i] = B[j];
+                        break;
+                    }
                 }
             }
         }
