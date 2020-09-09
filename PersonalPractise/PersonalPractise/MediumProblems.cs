@@ -452,8 +452,60 @@ namespace PersonalPractise
         // 16.13
         public double[] CutSquares(int[] square1, int[] square2)
         {
-            int[] squareCenterOne = { square1[0] + square1[2] / 2, square1[1] + square1[2] / 2 };
-            int[] squareCenterTwo = { square2[0] + square2[2] / 2, square2[1] + square2[2] / 2 };
+            // 两个正方形的中心
+            double centerX1 = square1[0] + square1[2] / 2.0;
+            double centerY1 = square1[1] + square1[2] / 2.0;
+            double centerX2 = square2[0] + square2[2] / 2.0;
+            double centerY2 = square2[1] + square2[2] / 2.0;
+
+
+            // 特殊情况，x相同，平行于Y轴，斜率无穷大
+            if (centerX1 == centerX2)
+            {
+                // 两个正方形左下坐标决定了最底端的y值，因为x已经确定
+                double y1 = Math.Min(square1[1], square2[1]);
+                // 顶端根据左下角坐标和边长计算得出
+                double y2 = Math.Max(square1[1] + square1[2], square2[1] + square2[2]);
+                return new double[] { centerX1, y1, centerX1, y2 };
+            }
+
+            // 直线斜率和在y轴截距
+            double k = (centerY2 - centerY1) / (centerX2 - centerX1);
+            double b = centerY1 - k * centerX1;
+
+            // 交点坐标
+            double p1X, p1Y, p2X, p2Y;
+
+            // 必定经过中心点，所以不存在直线经过相邻直角边的情况
+            // 超过45°就是上下两条边
+            // 小于就是左右
+            if (Math.Abs(k) < 1)
+            {
+                p1X = Math.Min(square1[0], square2[0]);
+                p1Y = k * p1X + b;
+                p2X = Math.Max(square1[0] + square1[2], square2[0] + square2[2]);
+                p2Y = k * p2X + b;
+            }
+            else
+            {
+                p1Y = Math.Min(square1[1], square2[1]);
+                p1X = (p1Y - b) / k;
+                p2Y = Math.Max(square1[1] + square1[2], square2[1] + square2[2]);
+                p2X = (p2Y - b) / k;
+
+                if (p1X > p2X)
+                {
+                    double temp = p1X;
+                    p1X = p2X;
+                    p2X = temp;
+                    temp = p1Y;
+                    p1Y = p2Y;
+                    p2Y = temp;
+                }
+
+            }
+
+            return new double[] { p1X, p1Y, p2X, p2Y };
 
         }
 
@@ -488,6 +540,45 @@ namespace PersonalPractise
             return ans;
         }
 
+        // 16.16
+        public int[] SubSort(int[] array)
+        {
+            if (array.Length == 0 || array == null)
+            {
+                return new int[] { -1, -1 };
+            }
+            // 根据题意初始化
+            int left = -1;
+            int right = -1;
+
+            int maxNum = int.MinValue;
+            int minNum = int.MaxValue;
+            int len = array.Length;
+
+            for (int i = 0; i < len; i++)
+            {
+                if (array[i] < maxNum)
+                {
+                    right = i;
+                }
+                else
+                {
+                    maxNum = Math.Max(maxNum, array[i]);
+                }
+
+                if (array[len - i - 1] > minNum)
+                {
+                    left = len - i - 1;
+                }
+                else
+                {
+                    minNum = Math.Min(minNum, array[len - i - 1]);
+                }
+            }
+
+            return new int[] { left, right };
+        }
+
         // 16.17
         public int MaxSubArray(int[] nums)
         {
@@ -504,6 +595,51 @@ namespace PersonalPractise
                 }
             }
             return maxSum;
+        }
+
+        // 16.25
+        public class LRUCache
+        {
+
+            private int capacity;
+            private LinkedList<int> lruTrack;
+            private Dictionary<int, int> cache;
+            public LRUCache(int capacity)
+            {
+                this.capacity = capacity;
+                lruTrack = new LinkedList<int>();
+                this.cache = new Dictionary<int, int>();
+            }
+
+            public int Get(int key)
+            {
+                if (cache.ContainsKey(key))
+                {
+                    lruTrack.Remove(key);
+                    lruTrack.AddLast(key);
+                    return cache[key];
+                }
+                return -1;
+            }
+
+            public void Put(int key, int value)
+            {
+                if (cache.ContainsKey(key))
+                {
+                    lruTrack.Remove(key);
+                    lruTrack.AddLast(key);
+                    cache[key] = value;
+                    return;
+                }
+                if (cache.Count == capacity)
+                {
+                    int removeVal = lruTrack.First.Value;
+                    lruTrack.RemoveFirst();
+                    cache.Remove(removeVal);
+                }
+                cache.Add(key, value);
+                lruTrack.AddLast(key);
+            }
         }
     }
 }
