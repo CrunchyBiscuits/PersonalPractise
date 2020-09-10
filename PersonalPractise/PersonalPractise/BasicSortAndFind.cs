@@ -9,6 +9,10 @@ namespace PersonalPractise
         // 二分查找
         public int binarySearch(int[] arr, int target)
         {
+            if (arr == null || arr.Length == 0)
+            {
+                return -1;
+            }
             int low = 0;
             int high = arr.Length - 1;
             int mid;
@@ -28,6 +32,7 @@ namespace PersonalPractise
                     return mid;
                 }
             }
+            // return low;
             return -1;
         }
 
