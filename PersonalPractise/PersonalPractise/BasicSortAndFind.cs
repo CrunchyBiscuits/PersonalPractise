@@ -29,7 +29,7 @@ namespace PersonalPractise
                     high = mid - 1;
                 }else
                 {
-                    return mid;
+                    return mid; 
                 }
             }
             // return low;
