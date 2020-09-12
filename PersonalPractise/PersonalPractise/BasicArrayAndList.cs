@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 
 namespace PersonalPractise
@@ -54,7 +55,7 @@ namespace PersonalPractise
             {
                 SimpleNode prev = null;
                 SimpleNode curr = head;
-                while (curr!=null)
+                while (curr != null)
                 {
                     SimpleNode nextTemp = curr.next;
                     curr.next = prev;
@@ -169,7 +170,7 @@ namespace PersonalPractise
             return ans;
         }
 
-        // leetcode 25 -- k个一组反转，带队人，头插法
+        // leetcode 25 -- k个一组反转，带队人
         public ListNode ReverseKGroup(ListNode head, int k)
         {
             if (head == null || k == 1)
@@ -291,7 +292,7 @@ namespace PersonalPractise
                 else
                 {
                     Node newNode = new Node(key, value);
-                    if (cache.Count>=capacity)
+                    if (cache.Count >= capacity)
                     {
                         cache.Remove(end.key);
                         remove(end);
@@ -327,7 +328,7 @@ namespace PersonalPractise
                 n.pre = null;
                 n.next = head;
 
-                if (head!=null)
+                if (head != null)
                 {
                     head.pre = n;
                 }
@@ -341,25 +342,84 @@ namespace PersonalPractise
             }
         }
 
-        // leetcode 
+        // leetcode 19 --- 删除倒数第N个节点
         public ListNode RemoveNthFromEnd(ListNode head, int n)
         {
-            ListNode first = head;
-            ListNode second = head;
-            while (n!=0)
+            ListNode pre = new ListNode(0);
+            pre.next = head;
+            ListNode first = pre;
+            ListNode second = pre;
+            while (n != 0)
             {
                 second = second.next;
                 n--;
             }
 
-            while (second.next!=null)
+            while (second.next != null)
             {
                 first = first.next;
                 second = second.next;
             }
             first.next = first.next.next;
 
-            return head;
+            return pre.next;
         }
+
+        // leetcode 80 --- 删除多余重复项2
+        public int RemoveDuplicates2(int[] nums)
+        {
+            if (nums.Length == 0)
+            {
+                return 0;
+            }
+            int i = 1;
+            int count = 1;
+            for (int j = 1; j < nums.Length; j++)
+            {
+                if (nums[j] == nums[j-1])
+                {
+                    count++;
+                }
+                else
+                {
+                    count = 1;
+                }
+                if (count<=2)
+                {
+                    nums[i++] = nums[j];
+                }
+            }
+            return i;
+        }
+
+        // leetcode 82 删除链表的重复元素
+        public ListNode DeleteDuplicates(ListNode head)
+        {
+            ListNode pre = new ListNode(0);
+            pre.next = head;
+            ListNode help = pre;
+            while (help.next != null && help.next.next!=null)
+            {
+                if (help.next.val == help.next.next.val)
+                {
+                    ListNode temp = help.next;
+                    while (temp!=null&&temp.next!=null&&temp.val==temp.next.val)
+                    {
+                        temp = temp.next;
+                    }
+                    help.next = temp.next;
+                }
+                else
+                {
+                    help = help.next;
+                }
+            }
+
+            return pre.next;
+        }
+
+        // leetcode 42
+
+        // leetcode 1171
     }
 }
