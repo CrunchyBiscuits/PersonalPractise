@@ -50,13 +50,32 @@ namespace PersonalPractise
                 return head;
             }
 
-            public SimpleNode reverseLinkedList(SimpleNode prev, SimpleNode next)
+            public SimpleNode reverseLinkedList(SimpleNode head)
             {
-
+                SimpleNode prev = null;
+                SimpleNode curr = head;
+                while (curr!=null)
+                {
+                    SimpleNode nextTemp = curr.next;
+                    curr.next = prev;
+                    prev = curr;
+                    curr = nextTemp;
+                }
+                return prev;
             }
         }
 
         // 双链表
+        class DoubleNode
+        {
+            DoubleNode pre, next;
+            int val;
+
+            DoubleNode()
+            {
+
+            }
+        }
 
         // leetcode 209 -- 双指针， 滑动窗口
         public int MinSubArrayLen(int s, int[] nums)
@@ -102,19 +121,19 @@ namespace PersonalPractise
         // leetcode 560 -- 前缀和求连续区间和
         public int SubarraySum(int[] nums, int k)
         {
-            // O(n2)
-            //int N = nums.Length;
-            //int[] presum = new int[N + 1];
+            // o(n2)
+            //int n = nums.Length;
+            //int[] presum = new int[n + 1];
             //presum[0] = 0;
-            //for (int i = 0; i < N; i++)
+            //for (int i = 0; i < n; i++)
             //{
             //    presum[i + 1] = presum[i] + nums[i];
             //}
             //int ans = 0;
 
-            //for (int i = 0; i < N; i++)
+            //for (int i = 0; i < n; i++)
             //{
-            //    for (int j = i; j < N; j++)
+            //    for (int j = i; j < n; j++)
             //    {
             //        if (presum[j + 1] - presum[i] == k)
             //        {
@@ -207,7 +226,7 @@ namespace PersonalPractise
 
             ListNode odd = head;
             ListNode even = head.next;
-            ListNode head2 = even;
+            ListNode evenHead = even;
             while (even != null && even.next != null)
             {
                 odd.next = even.next;
@@ -216,9 +235,131 @@ namespace PersonalPractise
                 even = even.next;
             }
 
-            odd.next = head2;
+            odd.next = evenHead;
             return head;
         }
 
+        // leetcode 146 -- LRU
+
+        public class LRUCache
+        {
+            public class Node
+            {
+                public Node pre;
+                public Node next;
+                public int val;
+                public int key;
+
+                public Node(int key, int d)
+                {
+                    this.key = key;
+                    this.val = d;
+                }
+            }
+
+            Dictionary<int, Node> cache = new Dictionary<int, Node>();
+            int capacity;
+            Node head = null;
+            Node end = null;
+
+            public LRUCache(int capacity)
+            {
+                this.capacity = capacity;
+            }
+
+            public int Get(int key)
+            {
+                if (cache.ContainsKey(key))
+                {
+                    Node N = cache[key];
+                    remove(N);
+                    setHead(N);
+                    return N.val;
+                }
+                return -1;
+            }
+
+            public void Put(int key, int value)
+            {
+                if (cache.ContainsKey(key))
+                {
+                    Node N = cache[key];
+                    remove(N);
+                    setHead(N);
+                    N.val = value;
+                }
+                else
+                {
+                    Node newNode = new Node(key, value);
+                    if (cache.Count>=capacity)
+                    {
+                        cache.Remove(end.key);
+                        remove(end);
+                    }
+                    setHead(newNode);
+                    cache.Add(key, newNode);
+                }
+            }
+
+            public void remove(Node n)
+            {
+                if (n.pre == null)
+                {
+                    head = n.next;
+                }
+                else
+                {
+                    n.pre.next = n.next;
+                }
+
+                if (n.next == null)
+                {
+                    end = n.pre;
+                }
+                else
+                {
+                    n.next.pre = n.pre;
+                }
+            }
+
+            public void setHead(Node n)
+            {
+                n.pre = null;
+                n.next = head;
+
+                if (head!=null)
+                {
+                    head.pre = n;
+                }
+
+                head = n;
+
+                if (end == null)
+                {
+                    end = head;
+                }
+            }
+        }
+
+        // leetcode 
+        public ListNode RemoveNthFromEnd(ListNode head, int n)
+        {
+            ListNode first = head;
+            ListNode second = head;
+            while (n!=0)
+            {
+                second = second.next;
+                n--;
+            }
+
+            while (second.next!=null)
+            {
+                first = first.next;
+                second = second.next;
+            }
+            first.next = first.next.next;
+
+            return head;
+        }
     }
 }
