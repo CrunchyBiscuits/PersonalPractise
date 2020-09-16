@@ -418,8 +418,6 @@ namespace PersonalPractise
             return pre.next;
         }
 
-        // leetcode 42
-
         // leetcode 1171
     }
 }
