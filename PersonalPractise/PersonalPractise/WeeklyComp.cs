@@ -7,12 +7,12 @@ namespace PersonalPractise
 {
     class WeeklyComp
     {
-        public static void Main(String[] args)
-        {
-            WeeklyComp a = new WeeklyComp();
-            int[] b = { 2,2};
-            Console.WriteLine(a.ContainsPattern(b,1,2));
-        }
+        //public static void Main(String[] args)
+        //{
+        //    WeeklyComp a = new WeeklyComp();
+        //    int[] b = { 2,2};
+        //    Console.WriteLine(a.ContainsPattern(b,1,2));
+        //}
 
 
         // 201 周赛 5483

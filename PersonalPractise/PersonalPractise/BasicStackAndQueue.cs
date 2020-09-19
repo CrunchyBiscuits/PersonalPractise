@@ -418,7 +418,76 @@ namespace PersonalPractise
         }
 
         // leetcode 85 -- 最大矩形
+        public int MaximalRectangle(char[][] matrix)
+        {
+            if (matrix.Length == 0 || matrix[0].Length == 0)
+            {
+                return 0;
+            }
+            int[] height = new int[matrix[0].Length];//动态规划，确定每一个点的高，然后 逐层实现  柱状图中最大的矩形
+            int max = 0;
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                for (int j = 0; j < matrix[0].Length; j++)
+                {
+                    height[j] = matrix[i][j] == '1' ? (height[j] + 1) : 0;
+                }
+                int tempmax = LargestRectangleArea85(height);//构造  柱状图中最大的矩形，逐层实现
+                max = Math.Max(max, tempmax);
+            }
+            return max;
+        }
 
+        public int LargestRectangleArea85(int[] heights)
+        {
+            int[] ta = new int[heights.Length];
+            int[] leftbound = new int[heights.Length];
+            int[] rightbound = new int[heights.Length];
+            int top = -1;
+            //单调栈--左
+            for (int i = 0; i < heights.Length; i++)
+            {
+                while (top >= 0 && heights[i] <= heights[ta[top]])
+                {
+                    ta[top] = 0;
+                    top--;
+                }
+                if (top == -1)
+                {
+                    leftbound[i] = -1;
+                }
+                else
+                {
+                    leftbound[i] = ta[top];
+                }
+                ta[++top] = i;
+            }
+            //单调栈--右
+            top = -1;
+            for (int i = heights.Length - 1; i >= 0; i--)
+            {
+                while (top >= 0 && heights[i] <= heights[ta[top]])
+                {
+                    ta[top] = 0;
+                    top--;
+                }
+                if (top == -1)
+                {
+                    rightbound[i] = heights.Length;
+                }
+                else
+                {
+                    rightbound[i] = ta[top];
+                }
+                ta[++top] = i;
+            }
+            int max = 0;
+            for (int i = 0; i < heights.Length; i++)
+            {
+                max = Math.Max(max, heights[i] * (rightbound[i] - leftbound[i] - 1));
+            }
+            return max;
+        }
 
         // leetcode 239 -- 滑动窗口最大值, 双端队列
         public int[] MaxSlidingWindow(int[] nums, int k)
@@ -554,10 +623,96 @@ namespace PersonalPractise
         // leetcode 621 -- 任务调度器
         public int LeastInterval(char[] tasks, int n)
         {
+            // 第一步 统计每种任务的数量
+            int[] types = new int[26];
+            foreach (char item in tasks)
+            {
+                types[item - 'A'] = types[item - 'A'] + 1;
+            }
 
+            // 第二步 对任务数量进行排序
+            Array.Sort(types);
+
+            //第三步 根据任务量最多（如A任务）的任务计算时间
+            int max = types[25];
+            int time = (max - 1) * (n + 1) + 1;  // 最多任务为max，那么间隔有max-1个，间隔时间加上本身任务的运行时间
+            int i = 24;
+
+            //第四步 检查是否还有和任务最多数量一样多的任务，统计最后一个A运行完之后是否还有任务，这取决于和A数量一样多的任务
+            while (i >= 0 && types[i] == max)
+            {
+                time++;
+                i--;
+            }
+
+            return Math.Max(time, tasks.Length);
         }
 
         // leetcode 622 -- 循环队列
+        public class MyCircularQueue
+        {
+            int queueLength;
+            LinkedList<int> queue;
+            /** Initialize your data structure here. Set the size of the queue to be k. */
+            public MyCircularQueue(int k)
+            {
+                queueLength = k;
+                queue = new LinkedList<int>();
+            }
 
+            /** Insert an element into the circular queue. Return true if the operation is successful. */
+            public bool EnQueue(int value)
+            {
+                if (!IsFull())
+                {
+                    queue.AddLast(value);
+                    return true;
+                }
+                return false;
+            }
+
+            /** Delete an element from the circular queue. Return true if the operation is successful. */
+            public bool DeQueue()
+            {
+                if (!IsEmpty())
+                {
+                    queue.RemoveFirst();
+                    return true;
+                }
+                return false;
+            }
+
+            /** Get the front item from the queue. */
+            public int Front()
+            {
+                if (queue.Count==0||queue.First==null)
+                {
+                    return -1;
+                }
+                return queue.First.Value;
+            }
+
+            /** Get the last item from the queue. */
+            public int Rear()
+            {
+                if (queue.Count == 0 || queue.First == null)
+                {
+                    return -1;
+                }
+                return queue.Last.Value;
+            }
+
+            /** Checks whether the circular queue is empty or not. */
+            public bool IsEmpty()
+            {
+                return queue.Count == 0;
+            }
+
+            /** Checks whether the circular queue is full or not. */
+            public bool IsFull()
+            {
+                return queue.Count == queueLength;
+            }
+        }
     }
 }
