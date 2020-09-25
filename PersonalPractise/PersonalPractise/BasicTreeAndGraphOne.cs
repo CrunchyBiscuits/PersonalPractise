@@ -7,11 +7,11 @@ namespace PersonalPractise
 {
     class BasicTreeAndGraphOne
     {
-        public static void Main()
-        {
-            BasicTreeAndGraphOne test = new BasicTreeAndGraphOne();
-            test.deserialize("1,2,3,null,null,4,5");
-        }
+        //public static void Main()
+        //{
+        //    BasicTreeAndGraphOne test = new BasicTreeAndGraphOne();
+        //    test.deserialize("1,2,3,null,null,4,5");
+        //}
 
         // 297 序列化，反序列化
         // Encodes a tree to a single string.

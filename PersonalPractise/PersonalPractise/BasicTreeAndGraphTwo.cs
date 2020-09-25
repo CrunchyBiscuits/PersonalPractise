@@ -48,5 +48,62 @@ namespace PersonalPractise
         // 节点之间有制约关系，每个顶点只出现一次
 
         // 克隆图
+        public class CloneGraphs
+        {
+            public class Node
+            {
+                public int val;
+                public IList<Node> neighbors;
+
+                public Node()
+                {
+                    val = 0;
+                    neighbors = new List<Node>();
+                }
+
+                public Node(int _val)
+                {
+                    val = _val;
+                    neighbors = new List<Node>();
+                }
+
+                public Node(int _val, List<Node> _neighbors)
+                {
+                    val = _val;
+                    neighbors = _neighbors;
+                }
+            }
+
+            public Node CloneGraph(Node node)
+            {
+                if (node == null)
+                {
+                    return node;
+                }
+
+                Dictionary<Node, Node> visited = new Dictionary<Node, Node>();
+                Queue<Node> queue = new Queue<Node>();
+                queue.Enqueue(node);
+                visited.Add(node, new Node(node.val, new List<Node>()));
+                while (queue.Count!=0)
+                {
+                    Node n = queue.Dequeue();
+                    foreach (Node neighbour in n.neighbors)
+                    {
+                        if (!visited.ContainsKey(neighbour))
+                        {
+                            visited.Add(neighbour, new Node(neighbour.val, new List<Node>()));
+                            queue.Enqueue(neighbour);
+                        }
+                        visited[n].neighbors.Add(visited[neighbour]);
+                    }
+
+                }
+
+
+                return visited[node];
+            }
+        }
+
     }
 }

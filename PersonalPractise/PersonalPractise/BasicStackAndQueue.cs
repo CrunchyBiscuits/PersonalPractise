@@ -116,7 +116,9 @@ namespace PersonalPractise
         }
     }
 
-    // 优先队列/堆实现，插入复杂度logN
+    // 优先队列/堆实现，插入复杂度logN，在C#中没有直接的优先队列，使用SortedSet进行代替
+    
+
 
     // 双端队列
     class BasicStackAndQueue
