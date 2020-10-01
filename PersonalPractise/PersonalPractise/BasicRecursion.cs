@@ -187,5 +187,11 @@ namespace PersonalPractise
 
             return dp[n];
         }
+
+        // 47 全排列
+        public IList<IList<int>> PermuteUnique(int[] nums)
+        {
+
+        }
     }
 }
