@@ -6,12 +6,12 @@ using System.Transactions;
 
 namespace PersonalPractise
 {
-     public class TreeNode
+    public class TreeNode
     {
-     public int val;
-      public TreeNode left;
-      public TreeNode right;
-      public TreeNode(int x) { val = x; }
+        public int val;
+        public TreeNode left;
+        public TreeNode right;
+        public TreeNode(int x) { val = x; }
     }
     class Daily
     {
@@ -28,18 +28,18 @@ namespace PersonalPractise
                 return true;
             var count = 0;
             char[] sC = s.ToCharArray();
-            foreach(char tC in t.ToCharArray())
+            foreach (char tC in t.ToCharArray())
             {
                 if (count == sLength)
                     return true;
-                if(tC == sC[count])
+                if (tC == sC[count])
                 {
                     count++;
                 }
             }
 
 
-            return count==sLength;
+            return count == sLength;
         }
 
         //NUM104 https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/
@@ -49,7 +49,7 @@ namespace PersonalPractise
                 return 0;
             var leftVal = 1 + MaxDepth(root.left);
             var rigthVal = 1 + MaxDepth(root.right);
-            return leftVal>rigthVal?leftVal:rigthVal;
+            return leftVal > rigthVal ? leftVal : rigthVal;
         }
 
         //NUM343 https://leetcode-cn.com/problems/integer-break/
@@ -57,13 +57,13 @@ namespace PersonalPractise
         {
             int[] allN = new int[n + 1];
             allN[0] = allN[1] = 0;
-            for(int i = 2; i <= n; i++)
+            for (int i = 2; i <= n; i++)
             {
-                for(int j = 1; j < i; j++)
+                for (int j = 1; j < i; j++)
                 {
                     allN[i] = Math.Max(allN[i], Math.Max(j * (i - j), j * allN[i - j]));
                 }
-                
+
             }
 
             return allN[n];
@@ -120,7 +120,7 @@ namespace PersonalPractise
         {
             if (depth == k)
             {
-                if (key == n-1)
+                if (key == n - 1)
                 {
                     count++;
                 }
@@ -134,7 +134,7 @@ namespace PersonalPractise
             {
                 foreach (int item in trans[key])
                 {
-                    searchWays(n, k, trans,item, depth + 1);
+                    searchWays(n, k, trans, item, depth + 1);
                 }
             }
         }
@@ -156,16 +156,16 @@ namespace PersonalPractise
         // 70 爬楼梯 + 滚动数组
         public int ClimbStairs(int n)
         {
-            if (n<=0)
+            if (n <= 0)
             {
                 return 0;
             }
-            else if (n==1)
+            else if (n == 1)
             {
                 return 1;
             }
 
-            int[] dp = new int[n+1];
+            int[] dp = new int[n + 1];
             dp[0] = 1;
             dp[1] = 1;
 
@@ -179,21 +179,37 @@ namespace PersonalPractise
         // 680 验证回文字符串 2 + 双指针
         public bool ValidPalindrome(string s)
         {
-            return isValidPalindrome(s, 0, s.Length - 1);
-        }
-
-        public bool isValidPalindrome(string s, int left, int right)
-        {
+            int left = 0;
+            int right = s.Length - 1;
             while (left < right)
             {
-                if (s[left]==s[right])
+                if (s[left] == s[right])
                 {
                     left++;
                     right--;
                 }
                 else
                 {
-                    return isValidPalindrome(s, left + 1, right) || isValidPalindrome(s, left, right - 1);
+                    bool flagL = true, flagR = true;
+                    for (int i = left, j = right - 1; i < j; i++,j--)
+                    {
+                        if (s[i] != s[j])
+                        {
+                            flagL = false;
+                            break;
+                        }
+                    }
+
+                    for (int i = left + 1, j = right; i < j; i++,j--)
+                    {
+                        if (s[i] != s[j])
+                        {
+                            flagR = false;
+                            break;
+                        }
+                    }
+
+                    return flagL || flagR;
                 }
             }
             return true;
@@ -203,15 +219,15 @@ namespace PersonalPractise
         public bool CanPlaceFlowers(int[] flowerbed, int n)
         {
 
-            if (flowerbed.Length<1||flowerbed==null)
+            if (flowerbed.Length < 1 || flowerbed == null)
             {
                 return false;
             }
 
             int count = 0;
 
-            int[] newFlowerbed = new int[flowerbed.Length+2];
-            for (int i = 1; i < newFlowerbed.Length-1; i++)
+            int[] newFlowerbed = new int[flowerbed.Length + 2];
+            for (int i = 1; i < newFlowerbed.Length - 1; i++)
             {
                 newFlowerbed[i] = flowerbed[i - 1];
             }
@@ -219,7 +235,7 @@ namespace PersonalPractise
 
             for (int i = 1; i < newFlowerbed.Length - 1; i++)
             {
-                if (newFlowerbed[i]==0 && newFlowerbed[i-1]==0 && newFlowerbed[i+1]==0)
+                if (newFlowerbed[i] == 0 && newFlowerbed[i - 1] == 0 && newFlowerbed[i + 1] == 0)
                 {
                     newFlowerbed[i] = 1;
                     count++;
@@ -228,5 +244,61 @@ namespace PersonalPractise
 
             return count >= n;
         }
+
+        // 758 字符串中加粗单词
+        public string BoldWords(string[] words, string S)
+        {
+            bool[] isBold = new bool[S.Length];
+            // 设置所有需要加粗的字段
+            foreach (string word in words)
+            {
+                int index = S.IndexOf(word, 0);
+                while (index!=-1)
+                {
+                    for (int i = index; i < index + word.Length; i++) // 这里index+word.Length
+                    {
+                        isBold[i] = true;
+                    }
+                    index = S.IndexOf(word, index + 1);
+                }
+            }
+
+            // 根据bold的判断，添加字符串
+            // 需要注意边界值的判断
+            StringBuilder builder = new StringBuilder();
+            if (isBold[0])
+            {
+                builder.Append("<b>");
+            }
+            for (int i = 0; i < S.Length; i++)
+            {
+                builder.Append(S[i]);
+                if (i==S.Length-1)
+                {
+                    if (isBold[i])
+                    {
+                        builder.Append("</b>");
+                    }
+                    break;
+                }
+                if (!isBold[i]&&isBold[i+1])
+                {
+                    builder.Append("<b>");
+                }
+                else if (isBold[i] && !isBold[i + 1])
+                {
+                    builder.Append("</b>");
+                }
+            }
+
+
+            return builder.ToString();
+        }
+
+
+        // 回文字符串
+        // 找所有子串
+        // S.indexOf的用法
+
     }
 }
