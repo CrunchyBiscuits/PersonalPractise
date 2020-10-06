@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -376,7 +377,7 @@ namespace PersonalPractise
             int count = 1;
             for (int j = 1; j < nums.Length; j++)
             {
-                if (nums[j] == nums[j-1])
+                if (nums[j] == nums[j - 1])
                 {
                     count++;
                 }
@@ -384,7 +385,7 @@ namespace PersonalPractise
                 {
                     count = 1;
                 }
-                if (count<=2)
+                if (count <= 2)
                 {
                     nums[i++] = nums[j];
                 }
@@ -398,12 +399,12 @@ namespace PersonalPractise
             ListNode pre = new ListNode(0);
             pre.next = head;
             ListNode help = pre;
-            while (help.next != null && help.next.next!=null)
+            while (help.next != null && help.next.next != null)
             {
                 if (help.next.val == help.next.next.val)
                 {
                     ListNode temp = help.next;
-                    while (temp!=null&&temp.next!=null&&temp.val==temp.next.val)
+                    while (temp != null && temp.next != null && temp.val == temp.next.val)
                     {
                         temp = temp.next;
                     }
@@ -419,5 +420,108 @@ namespace PersonalPractise
         }
 
         // leetcode 1171
+
+        // 数组遍历
+        // 485 最大连续1的个数
+        public int FindMaxConsecutiveOnes(int[] nums)
+        {
+            // 判断边界情况
+            if (nums == null || nums.Length < 1)
+            {
+                return 0;
+            }
+
+            int left = 0;
+            int right = 0;
+            int ans = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] == 1)
+                {
+                    right++;
+                }
+                else
+                {
+                    ans = Math.Max(ans, right - left); //每次刷新双指针的时候进行比较大小
+                    left = right;
+                }
+            }
+
+
+            return Math.Max(ans, right - left);
+        }
+
+        // 495 提莫攻击
+        public int FindPoisonedDuration(int[] timeSeries, int duration)
+        {
+            if (timeSeries == null || timeSeries.Length < 1 || duration == 0)
+            {
+                return 0;
+            }
+
+            if (timeSeries.Length == 1)
+            {
+                return duration;
+            }
+
+            int ans = 0;
+            int pointer = timeSeries[0] + duration;
+
+            for (int i = 1; i < timeSeries.Length; i++)
+            {
+                if (timeSeries[i] < pointer)
+                {
+                    int temp = timeSeries[i] - timeSeries[i - 1];
+                    ans += temp;
+                }
+                else
+                {
+                    ans += duration;
+                }
+                pointer = timeSeries[i] + duration;
+
+            }
+
+            ans += duration;
+
+            return ans;
+
+        }
+
+        // 414 
+        public int ThirdMax(int[] nums)
+        {
+            if (nums.Length <= 3)
+            {
+                return nums.Max();
+            }
+
+            int max1 = int.MinValue;
+            int max2 = int.MinValue;
+            int max3 = int.MinValue;
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] > max1)
+                {
+                    max3 = max2;
+                    max2 = max1;
+                    max1 = nums[i];
+                }
+                else if (nums[i] > max2)
+                {
+                    max3 = max2;
+                    max2 = nums[i];
+                }
+                else if (nums[i] > max3)
+                {
+                    max3 = nums[i];
+                }
+            }
+
+            return max3==int.MinValue?max1:max3;
+        }
+
+        // 628
     }
 }

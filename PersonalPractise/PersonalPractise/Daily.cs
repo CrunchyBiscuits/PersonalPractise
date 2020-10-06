@@ -300,5 +300,32 @@ namespace PersonalPractise
         // 找所有子串
         // S.indexOf的用法
 
+
+        // 1010 总持续时间可被60整除的歌曲 取模优化方法 一对对数的时候使用
+        public int NumPairsDivisibleBy60(int[] time)
+        {
+            if (time == null || time.Length<2)
+            {
+                return 0;
+            }
+
+            int res = 0;
+            int[] counts = new int[60];
+            for (int i = 0; i < time.Length; i++)
+            {
+                time[i] %= 60;
+                if (time[i] != 0)
+                {
+                    res += counts[60 - time[i]];
+                }
+                else
+                {
+                    res += counts[time[i]];
+                }
+                counts[time[i]]++;
+            }
+            return res;
+        }
+
     }
 }
