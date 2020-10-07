@@ -421,7 +421,7 @@ namespace PersonalPractise
 
         // leetcode 1171
 
-        // 数组遍历
+        // 数组遍历-------------------------------------------------------------------
         // 485 最大连续1的个数
         public int FindMaxConsecutiveOnes(int[] nums)
         {
@@ -488,40 +488,255 @@ namespace PersonalPractise
 
         }
 
-        // 414 
+        // 414 第三大的数
         public int ThirdMax(int[] nums)
         {
-            if (nums.Length <= 3)
+
+            HashSet<int> temp = new HashSet<int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                temp.Add(nums[i]);
+            }
+
+            if (temp.Count < 3)
             {
                 return nums.Max();
             }
 
-            int max1 = int.MinValue;
-            int max2 = int.MinValue;
-            int max3 = int.MinValue;
+            int max1 = nums.Min();
+            int max2 = max1;
+            int max3 = max1;
 
-            for (int i = 0; i < nums.Length; i++)
+            foreach (int item in temp)
             {
-                if (nums[i] > max1)
+                if (item > max1)
                 {
                     max3 = max2;
                     max2 = max1;
-                    max1 = nums[i];
+                    max1 = item;
                 }
-                else if (nums[i] > max2)
+                else if (item > max2)
                 {
                     max3 = max2;
-                    max2 = nums[i];
+                    max2 = item;
                 }
-                else if (nums[i] > max3)
+                else if (item > max3)
                 {
-                    max3 = nums[i];
+                    max3 = item;
                 }
             }
 
-            return max3==int.MinValue?max1:max3;
+            return max3;
         }
 
-        // 628
+        // 628 三个数的最大积
+        public int MaximumProduct(int[] nums)
+        {
+            Array.Sort(nums);
+
+            // 没有负数直接最大三个值
+            // 有一个负数肯定不考虑，有负数的时候，最小和次小值乘最大值和正常最大值比较
+            // 全是负数或者只有一个正数包含在以上两个值的比较之中因此可以不用单独列出来
+            return Math.Max(nums[0] * nums[1] * nums[nums.Length - 1], nums[nums.Length - 1] * nums[nums.Length - 2] * nums[nums.Length - 3]);
+        }
+
+        // 统计数组中的元素-------------------------------------------------------------
+        // 645 错误的集合
+        public int[] FindErrorNums(int[] nums)
+        {
+            int[] ans = new int[nums.Length + 1];
+            int[] res = new int[2];
+            for (int i = 0; i < nums.Length; i++)
+            {
+                ans[nums[i]]++;
+            }
+
+            for (int i = 1; i < ans.Length; i++)
+            {
+                if (ans[i] == 2)
+                {
+                    res[0] = i;
+                }
+                else if (ans[i] == 0)
+                {
+                    res[1] = i;
+                }
+            }
+
+            return res;
+        }
+
+        // 697 数组的度
+        public int FindShortestSubArray(int[] nums)
+        {
+            int n = nums.Length;
+            Dictionary<int, int> helper = new Dictionary<int, int>();
+
+            for (int i = 0; i < n; i++)
+            {
+                if (helper.ContainsKey(nums[i]))
+                {
+                    helper[nums[i]]++;
+                }
+                else
+                {
+                    helper[nums[i]] = 1;
+                }
+            }
+
+            int degree = helper.Values.Max();
+
+            List<int> ansCanditate = new List<int>();
+            foreach (int key in helper.Keys)
+            {
+                if (helper[key] == degree)
+                {
+                    ansCanditate.Add(key);
+                }
+            }
+
+            int ans = int.MaxValue;
+
+            foreach (int item in ansCanditate)
+            {
+                ans = Math.Min(ans, FindArray(nums, item));
+            }
+
+            return ans;
+        }
+
+        public int FindArray(int[] nums, int num)
+        {
+            int left = 0;
+            int right = nums.Length - 1;
+
+            while (left < right)
+            {
+                while (nums[left] != num)
+                {
+                    left++;
+                }
+                while (nums[right] != num)
+                {
+                    right--;
+                }
+                break;
+            }
+
+            return right - left + 1;
+        }
+
+        // 448 找到所有数组中消失的数字 符号标记原地修改
+        public IList<int> FindDisappearedNumbers(int[] nums)
+        {
+            // 使用额外空间
+            //IList<int> ans = new List<int>();
+            //int[] helper = new int[nums.Length+1];
+
+            //for (int i = 0; i < nums.Length; i++)
+            //{
+            //    helper[nums[i]]++;
+            //}
+
+            //for (int i = 1; i < helper.Length; i++)
+            //{
+            //    if (helper[i]==0)
+            //    {
+            //        ans.Add(i);
+            //    }
+            //}
+
+            //return ans;
+
+            // 不适用额外空间 原地修改， 通过符号标记
+
+            IList<int> ans = new List<int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int newIndex = Math.Abs(nums[i]) - 1;
+
+                if (nums[newIndex] > 0)
+                {
+                    nums[newIndex] *= -1;
+                }
+            }
+
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] > 0)
+                {
+                    ans.Add(i + 1);
+                }
+            }
+
+            return ans;
+        }
+
+        // 442 数组中重复数据 和448相同，变种
+        public IList<int> FindDuplicates(int[] nums)
+        {
+            IList<int> ans = new List<int>();
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int newIndex = Math.Abs(nums[i]) - 1; // 一定要加绝对值
+
+                if (nums[newIndex] < 0)
+                {
+                    ans.Add(newIndex + 1);
+                }
+                else
+                {
+                    nums[newIndex] *= -1;
+                }
+            }
+
+            return ans;
+        }
+
+        // 41 缺失的第一个正数
+        public int FirstMissingPositive(int[] nums)
+        {
+            Array.Sort(nums);
+
+            int ans = 1;
+            HashSet<int> visited = new HashSet<int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+
+                if (nums[i] > 0 && !visited.Contains(nums[i]))
+                {
+                    if (nums[i] != ans)
+                    {
+                        return ans;
+                    }
+                    else
+                    {
+
+                        ans++;
+                    }
+                }
+                visited.Add(nums[i]);
+            }
+
+            return ans;
+        }
+
+        // 274 H指数
+        public int HIndex(int[] citations)
+        {
+            int ans = 0;
+            Array.Sort(citations);
+            for (int i = 0; i < citations.Length; i++)
+            {
+                if (citations[i]>=citations.Length-i)
+                {
+                    return citations.Length - i;
+                }
+            }
+
+            return ans;
+        }
     }
 }
