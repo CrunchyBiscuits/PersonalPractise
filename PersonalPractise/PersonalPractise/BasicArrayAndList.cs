@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 
 namespace PersonalPractise
 {
@@ -738,5 +737,91 @@ namespace PersonalPractise
 
             return ans;
         }
+
+        // 数组的改变、移动--------------------------------------------------------------
+        // 453 最小移动次数使数组元素相等
+        public int MinMoves(int[] nums)
+        {
+            if (nums.Length<=1)
+            {
+                return 0;
+            }
+            int minNum = nums.Min();
+
+            long ans = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                ans += nums[i] - minNum;
+            }
+
+            return (int)ans;
+        }
+
+        // 665 非递减数列 边界值的判断 有的时候其实很憨憨的列出所有判定条件反而很聪明
+        public bool CheckPossibility(int[] nums)
+        {
+            if (nums==null||nums.Length<1)
+            {
+                return false;
+            }
+            int count = 0;
+            for (int i = 0; i < nums.Length-1; i++)
+            {
+                if (nums[i]>nums[i+1])
+                {
+                    count++;
+                }
+                // 注意这里的跨过一个值比较，因为可能存在[3,4,2,3]这样的情况，此时就算更换中间的数也无法成功
+                if (i != 0 && i != nums.Length - 2 && nums[i - 1] > nums[i + 1] && nums[i] > nums[i + 2])
+                    return false;
+            }
+
+            return count<=1;
+        }
+
+        // 283 移动零
+        public void MoveZeroes(int[] nums)
+        {
+            int left = 0;
+            int right = 0;
+
+            while (left < nums.Length&&right<nums.Length)
+            {
+                while (left<nums.Length&&nums[left]!=0)
+                {
+                    left++;
+                }
+
+                // 一定要注意这里的边界情况有一个right<=left的处理
+                while (right<nums.Length&&nums[right]==0||right<=left) 
+                {
+                    right++;
+                }
+                if (left < nums.Length && right < nums.Length && nums[left] == 0 && nums[right] != 0)
+                {
+                    nums[left] = nums[right];
+                    nums[right] = 0;
+                }
+            }
+        }
+
+
+
+        // 二维数组及滚动数组
+        // 118 杨辉三角
+        public IList<IList<int>> Generate(int numRows)
+        {
+            IList<IList<int>> ans = new List<IList<int>>();
+            for (int i = 0; i < numRows; i++)
+            {
+
+            }
+
+            return ans;
+        }
+        // 119
+        // 661
+        // 598
+        // 419
     }
 }
