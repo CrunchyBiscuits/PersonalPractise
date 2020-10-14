@@ -844,13 +844,20 @@ namespace PersonalPractise
             return ans;
         }
 
-        // 661 图片平滑器
-        public int[][] ImageSmoother(int[][] M)
-        {
 
+        // 598 范围求和2 脑筋急转弯
+        public int MaxCount(int m, int n, int[][] ops)
+        {
+            foreach (int[] item in ops)
+            {
+                m = Math.Min(m, item[0]);
+                n = Math.Min(n, item[1]);
+            }
+
+            return m * n;
         }
-        // 598
-        // 419
+
+        // 419 甲板上的战舰
 
         // 数组的旋转---------------------------------------------------------------
         // 189
