@@ -191,7 +191,7 @@ namespace PersonalPractise
                 else
                 {
                     bool flagL = true, flagR = true;
-                    for (int i = left, j = right - 1; i < j; i++,j--)
+                    for (int i = left, j = right - 1; i < j; i++, j--)
                     {
                         if (s[i] != s[j])
                         {
@@ -200,7 +200,7 @@ namespace PersonalPractise
                         }
                     }
 
-                    for (int i = left + 1, j = right; i < j; i++,j--)
+                    for (int i = left + 1, j = right; i < j; i++, j--)
                     {
                         if (s[i] != s[j])
                         {
@@ -253,7 +253,7 @@ namespace PersonalPractise
             foreach (string word in words)
             {
                 int index = S.IndexOf(word, 0);
-                while (index!=-1)
+                while (index != -1)
                 {
                     for (int i = index; i < index + word.Length; i++) // 这里index+word.Length
                     {
@@ -273,7 +273,7 @@ namespace PersonalPractise
             for (int i = 0; i < S.Length; i++)
             {
                 builder.Append(S[i]);
-                if (i==S.Length-1)
+                if (i == S.Length - 1)
                 {
                     if (isBold[i])
                     {
@@ -281,7 +281,7 @@ namespace PersonalPractise
                     }
                     break;
                 }
-                if (!isBold[i]&&isBold[i+1])
+                if (!isBold[i] && isBold[i + 1])
                 {
                     builder.Append("<b>");
                 }
@@ -304,7 +304,7 @@ namespace PersonalPractise
         // 1010 总持续时间可被60整除的歌曲 取模优化方法 一对对数的时候使用
         public int NumPairsDivisibleBy60(int[] time)
         {
-            if (time == null || time.Length<2)
+            if (time == null || time.Length < 2)
             {
                 return 0;
             }
@@ -327,5 +327,49 @@ namespace PersonalPractise
             return res;
         }
 
+        // 1002 查找常用字符
+        public IList<string> CommonChars(string[] A)
+        {
+            if (A == null || A.Length < 1)
+            {
+                return null;
+            }
+            int n = A.Length;
+            int[] minFrequence = new int[26];
+            // 每个位置更新最大值
+            for (int i = 0; i < minFrequence.Length; i++)
+            {
+                minFrequence[i] = int.MaxValue;
+            }
+
+            foreach (string word in A)
+            {
+                int[] freq = new int[26];
+                foreach (char ch in word)
+                {
+                    freq[ch - 'a']++;
+                }
+
+                // 这个循环特别重要，因为单单通过字符出现的数量与数组长度比较，会出现一个字符串出现很多同一个字符，而另一个没有的情况
+                for (int i = 0; i < 26; i++) 
+                {
+                    minFrequence[i] = Math.Min(minFrequence[i], freq[i]);
+                }
+            }
+
+            IList<string> ans = new List<string>();
+            for (int i = 0; i < minFrequence.Length; i++)
+            {
+                int count = minFrequence[i];
+                char chr = (char)('a' + i);
+                while (count > 0)
+                {
+                    ans.Add(chr + "");
+                    count--;
+                }
+            }
+
+            return ans;
+        }
     }
 }

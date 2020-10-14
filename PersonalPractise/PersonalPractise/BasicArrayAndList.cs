@@ -807,26 +807,55 @@ namespace PersonalPractise
 
 
         // 二维数组及滚动数组--------------------------------------------------------
-        // 118 杨辉三角
+        // 118，119 杨辉三角  动态规划
         public IList<IList<int>> Generate(int numRows)
         {
             IList<IList<int>> ans = new List<IList<int>>();
-            for (int i = 0; i < numRows; i++)
+            // 特殊情况0
+            if (numRows==0)
             {
+                return ans;
+            }
+            // 第一行始终为1
+            ans.Add(new List<int>());
+            ans[0].Add(1);
 
+            for (int i = 1; i < numRows; i++)
+            {
+                // 通过index获取上一行
+                IList<int> temp = new List<int>();
+                IList<int> prev = ans[i - 1];
+
+                // 第一个始终为1
+                temp.Add(1);
+
+                // 从第二个数开始计算新的一行
+                for (int j = 1; j < i; j++)
+                {
+                    temp.Add(prev[j - 1] + prev[j]);
+                }
+
+                // 最后一个数也为1
+                temp.Add(1);
+
+                ans.Add(temp);
             }
 
             return ans;
         }
-        // 119
-        // 661
+
+        // 661 图片平滑器
+        public int[][] ImageSmoother(int[][] M)
+        {
+
+        }
         // 598
         // 419
 
         // 数组的旋转---------------------------------------------------------------
         // 189
         // 396
-        
+
         // 特定顺序遍历二维数组
         // 54
         // 59
