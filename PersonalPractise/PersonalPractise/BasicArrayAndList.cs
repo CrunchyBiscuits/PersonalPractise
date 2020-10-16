@@ -860,8 +860,69 @@ namespace PersonalPractise
         // 419 甲板上的战舰
 
         // 数组的旋转---------------------------------------------------------------
-        // 189
-        // 396
+        // 189 旋转数组 额外数组或多次反转
+        public void Rotate(int[] nums, int k)
+        {
+            // 解法1 额外数组
+            int[] a = new int[nums.Length];
+            for (int i = 0; i < nums.Length; i++)
+            {
+                // 用除余会好很多
+                a[(i + k) % nums.Length] = nums[i]; 
+            }
+            for (int i = 0; i < nums.Length; i++)
+            {
+                nums[i] = a[i];
+            }
+
+            // 解法2 多次反转
+            k %= nums.Length;
+            reverse(nums, 0, nums.Length - 1);
+            reverse(nums, 0, k - 1);
+            reverse(nums, k, nums.Length - 1);
+        }
+
+        public void reverse(int[] nums, int start, int end)
+        {
+            while (start<end)
+            {
+                int temp = nums[start];
+                nums[start] = nums[end];
+                nums[end] = temp;
+                start++;
+                end--;
+            }
+        }
+
+        // 396 旋转函数 旋转权重
+        public int MaxRotateFunction(int[] A)
+        {
+            // 通过对权重的循环改变数组
+            int n = A.Length;
+            int max = int.MinValue;
+            if (n==0)
+            {
+                return 0;
+            }
+            for (int i = 0; i < n; i++)
+            {
+                int num = i;
+                int sum = 0;
+                foreach (int item in A)
+                {
+                    if (num==A.Length)
+                    {
+                        num = 0;
+                    }
+                    sum += num * item;
+                    num++;
+                }
+                max = Math.Max(max, sum);
+            }
+
+            return max;
+
+        }
 
         // 特定顺序遍历二维数组
         // 54
