@@ -729,7 +729,7 @@ namespace PersonalPractise
             Array.Sort(citations);
             for (int i = 0; i < citations.Length; i++)
             {
-                if (citations[i]>=citations.Length-i)
+                if (citations[i] >= citations.Length - i)
                 {
                     return citations.Length - i;
                 }
@@ -742,7 +742,7 @@ namespace PersonalPractise
         // 453 最小移动次数使数组元素相等
         public int MinMoves(int[] nums)
         {
-            if (nums.Length<=1)
+            if (nums.Length <= 1)
             {
                 return 0;
             }
@@ -760,14 +760,14 @@ namespace PersonalPractise
         // 665 非递减数列 边界值的判断 有的时候其实很憨憨的列出所有判定条件反而很聪明
         public bool CheckPossibility(int[] nums)
         {
-            if (nums==null||nums.Length<1)
+            if (nums == null || nums.Length < 1)
             {
                 return false;
             }
             int count = 0;
-            for (int i = 0; i < nums.Length-1; i++)
+            for (int i = 0; i < nums.Length - 1; i++)
             {
-                if (nums[i]>nums[i+1])
+                if (nums[i] > nums[i + 1])
                 {
                     count++;
                 }
@@ -776,7 +776,7 @@ namespace PersonalPractise
                     return false;
             }
 
-            return count<=1;
+            return count <= 1;
         }
 
         // 283 移动零
@@ -785,15 +785,15 @@ namespace PersonalPractise
             int left = 0;
             int right = 0;
 
-            while (left < nums.Length&&right<nums.Length)
+            while (left < nums.Length && right < nums.Length)
             {
-                while (left<nums.Length&&nums[left]!=0)
+                while (left < nums.Length && nums[left] != 0)
                 {
                     left++;
                 }
 
                 // 一定要注意这里的边界情况有一个right<=left的处理
-                while (right<nums.Length&&nums[right]==0||right<=left) 
+                while (right < nums.Length && nums[right] == 0 || right <= left)
                 {
                     right++;
                 }
@@ -812,7 +812,7 @@ namespace PersonalPractise
         {
             IList<IList<int>> ans = new List<IList<int>>();
             // 特殊情况0
-            if (numRows==0)
+            if (numRows == 0)
             {
                 return ans;
             }
@@ -868,7 +868,7 @@ namespace PersonalPractise
             for (int i = 0; i < nums.Length; i++)
             {
                 // 用除余会好很多
-                a[(i + k) % nums.Length] = nums[i]; 
+                a[(i + k) % nums.Length] = nums[i];
             }
             for (int i = 0; i < nums.Length; i++)
             {
@@ -884,7 +884,7 @@ namespace PersonalPractise
 
         public void reverse(int[] nums, int start, int end)
         {
-            while (start<end)
+            while (start < end)
             {
                 int temp = nums[start];
                 nums[start] = nums[end];
@@ -900,7 +900,7 @@ namespace PersonalPractise
             // 通过对权重的循环改变数组
             int n = A.Length;
             int max = int.MinValue;
-            if (n==0)
+            if (n == 0)
             {
                 return 0;
             }
@@ -910,7 +910,7 @@ namespace PersonalPractise
                 int sum = 0;
                 foreach (int item in A)
                 {
-                    if (num==A.Length)
+                    if (num == A.Length)
                     {
                         num = 0;
                     }
@@ -925,9 +925,109 @@ namespace PersonalPractise
         }
 
         // 特定顺序遍历二维数组
-        // 54
-        // 59
-        // 498
+        // 54 螺旋矩阵 边界值的设定
+        public IList<int> SpiralOrder(int[][] matrix)
+        {
+            if (matrix==null||matrix.Length<1)
+            {
+                return new List<int>();
+            }
+            int top = 0, bottom = matrix.Length - 1, left = 0, right = matrix[0].Length - 1;
+            IList<int> ans = new List<int>();
+            while (true)
+            {
+                for (int i = left; i <= right; i++)
+                {
+                    ans.Add(matrix[top][i]);
+                }
+                if (++top > bottom)
+                {
+                    break;
+                }
+                for (int i = top; i <= bottom; i++)
+                {
+                    ans.Add(matrix[i][right]);
+                }
+                if (--right < left)
+                {
+                    break;
+                }
+                for (int i = right; i >= left; i--)
+                {
+                    ans.Add(matrix[bottom][i]);
+                }
+                if (--bottom < top)
+                {
+                    break;
+                }
+                for (int i = bottom; i >= top; i--)
+                {
+                    ans.Add(matrix[i][left]);
+                }
+                if (++left > right)
+                {
+                    break;
+                }
+            }
+
+            return ans;
+        }
+
+        // 59 螺旋矩阵2 生成螺旋矩阵
+        public int[][] GenerateMatrix(int n)
+        {
+            int[][] ans = new int[n][];
+            for (int i = 0; i < n; i++)
+            {
+                ans[i] = new int[n];
+            }
+            int top = 0, bottom = n - 1, left = 0, right = n - 1;
+            int num = 1;
+            while (true)
+            {
+                for (int i = left; i <= right; i++)
+                {
+                    ans[top][i] = num++;
+                }
+                if (++top>bottom)
+                {
+                    break;
+                }
+                for (int i = top; i <= bottom; i++)
+                {
+                    ans[i][right]=num++;
+                }
+                if (--right<left)
+                {
+                    break;
+                }
+                for (int i = right; i >= left; i--)
+                {
+                    ans[bottom][i] = num++;
+                }
+                if (--bottom<top)
+                {
+                    break;
+                }
+                for (int i = bottom; i >= top; i--)
+                {
+                    ans[i][left] = num++;
+                }
+                if (++left>right)
+                {
+                    break;
+                }
+            }
+
+            return ans;
+        }
+
+        // 498 对角线遍历
+        public int[] FindDiagonalOrder(int[][] matrix)
+        {
+
+        }
+
 
         // 二维数组的变换
         // 566
