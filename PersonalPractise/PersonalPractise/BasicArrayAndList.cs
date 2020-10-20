@@ -928,7 +928,7 @@ namespace PersonalPractise
         // 54 螺旋矩阵 边界值的设定
         public IList<int> SpiralOrder(int[][] matrix)
         {
-            if (matrix==null||matrix.Length<1)
+            if (matrix == null || matrix.Length < 1)
             {
                 return new List<int>();
             }
@@ -989,15 +989,15 @@ namespace PersonalPractise
                 {
                     ans[top][i] = num++;
                 }
-                if (++top>bottom)
+                if (++top > bottom)
                 {
                     break;
                 }
                 for (int i = top; i <= bottom; i++)
                 {
-                    ans[i][right]=num++;
+                    ans[i][right] = num++;
                 }
-                if (--right<left)
+                if (--right < left)
                 {
                     break;
                 }
@@ -1005,7 +1005,7 @@ namespace PersonalPractise
                 {
                     ans[bottom][i] = num++;
                 }
-                if (--bottom<top)
+                if (--bottom < top)
                 {
                     break;
                 }
@@ -1013,7 +1013,7 @@ namespace PersonalPractise
                 {
                     ans[i][left] = num++;
                 }
-                if (++left>right)
+                if (++left > right)
                 {
                     break;
                 }
@@ -1025,7 +1025,52 @@ namespace PersonalPractise
         // 498 对角线遍历
         public int[] FindDiagonalOrder(int[][] matrix)
         {
+            // 检查空
+            if (matrix == null || matrix.Length == 0)
+            {
+                return new int[0];
+            }
 
+
+            int N = matrix.Length;
+            int M = matrix[0].Length;
+
+            // 创建存储答案的数组，以及每次循环暂存数据的List
+            int[] result = new int[N * M];
+            int k = 0;
+            List<int> intermediate = new List<int>();
+
+
+            // 从左上角开始，先向右，再向下，碰到偶数位置就取反
+            for (int d = 0; d < N + M - 1; d++)
+            {
+                // 每次开始清空数据结构
+                intermediate.Clear();
+
+                // 如果到了右边界限，开始向下
+                int r = d < M ? 0 : d - M + 1;
+                int c = d < M ? d : M - 1;
+
+                // 通过循环取出对角线数据
+                while (r < N && c > -1)
+                {
+                    intermediate.Add(matrix[r][c]);
+                    ++r;
+                    --c;
+                }
+
+                // 偶数位置取反
+                if (d % 2 == 0)
+                {
+                    intermediate.Reverse();
+                }
+
+                for (int i = 0; i < intermediate.Count; i++)
+                {
+                    result[k++] = intermediate[i];
+                }
+            }
+            return result;
         }
 
 
