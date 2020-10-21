@@ -7,6 +7,8 @@ namespace PersonalPractise
 {
     class BasicArrayAndList
     {
+        private const int 0 = 0;
+
         // 哈希表
         // 单链表
         class SimpleNode
@@ -1075,10 +1077,193 @@ namespace PersonalPractise
 
 
         // 二维数组的变换
-        // 566
-        // 48
-        // 73
-        // 289
+        // 566 重塑矩阵
+        public int[][] MatrixReshape(int[][] nums, int r, int c)
+        {
+            int numR = nums.Length;
+            int numC = nums[0].Length;
+
+            if (numR * numC != r * c)
+            {
+                return nums;
+            }
+
+            int[][] ans = new int[r][];
+
+            for (int i = 0; i < ans.Length; i++)
+            {
+                ans[i] = new int[c];
+            }
+
+            int x = 0, y = 0;
+            foreach (int[] row in nums)
+            {
+                foreach (int num in row)
+                {
+                    ans[x][y] = num;
+                    y++;
+                    if (y >= c)
+                    {
+                        y = 0;
+                        x++;
+                    }
+                }
+            }
+
+            return ans;
+        }
+
+        // 48 旋转图像
+        public void Rotate(int[][] matrix)
+        {
+
+        }
+
+        // 73 矩阵置零 第一行第一列作为标记位就不要在清零的时候计算，单独列出来
+        public void SetZeroes(int[][] matrix)
+        {
+            bool isFirstRow = false;
+            bool isFirstCol = false;
+
+            // 检查第一列是否有0
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                if (matrix[i][0] == 0)
+                {
+                    isFirstCol = true;
+                    break;
+                }
+            }
+
+            // 检查第一行是否有0
+            for (int i = 0; i < matrix[0].Length; i++)
+            {
+                if (matrix[0][i] == 0)
+                {
+                    isFirstRow = true;
+                    break;
+                }
+            }
+
+
+            // 通过第一行和第一列作为记录位置，标记0
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                for (int j = 0; j < matrix[0].Length; j++)
+                {
+                    if (matrix[i][j] == 0)
+                    {
+                        matrix[i][0] = 0;
+                        matrix[0][j] = 0;
+                    }
+                }
+            }
+
+            // 根据标记位清零
+            for (int i = 1; i < matrix.Length; i++)
+            {
+                if (matrix[i][0] == 0)
+                {
+                    for (int j = 1; j < matrix[0].Length; j++)
+                    {
+                        matrix[i][j] = 0;
+                    }
+                }
+            }
+
+            for (int i = 1; i < matrix[0].Length; i++)
+            {
+                if (matrix[0][i] == 0)
+                {
+                    for (int j = 1; j < matrix.Length; j++)
+                    {
+                        matrix[j][i] = 0;
+                    }
+                }
+            }
+
+            // 检查第一列
+            if (isFirstCol)
+            {
+                for (int i = 0; i < matrix.Length; i++)
+                {
+                    matrix[i][0] = 0;
+                }
+            }
+
+            // 检查第一行
+            if (isFirstRow)
+            {
+                for (int i = 0; i < matrix[0].Length; i++)
+                {
+                    matrix[0][i] = 0;
+                }
+            }
+        }
+
+        // 289 生命游戏
+        public void GameOfLife(int[][] board)
+        {
+            int rows = board.Length;
+            int cols = board[0].Length;
+
+            // 慎用Clone()
+            int[][] temp = new int[rows][];
+            for (int i = 0; i < rows; i++)
+            {
+                temp[i] = new int[cols];
+            }
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    temp[i][j] = board[i][j];
+                }
+            }
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    int count = calAliveCell(temp, i, j);
+                    // temp[i][j]本身数值的判断，最开始漏了
+                    if (temp[i][j] == 1 && (count < 2 || count > 3))
+                    {
+                        board[i][j] = 0;
+                    }
+                    if (count == 3 && temp[i][j] == 0)
+                    {
+                        board[i][j] = 1;
+                    }
+                }
+            }
+        }
+
+        public int calAliveCell(int[][] board, int row, int col)
+        {
+            int aliveCell = 0;
+            int[] neighbour = { 0, 1, -1 };
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (!(neighbour[i] == 0 && neighbour[j] == 0))
+                    {
+                        int r = (row + neighbour[i]);
+                        int c = (col + neighbour[j]);
+
+                        if ((r < board.Length && r >= 0) && (c < board[0].Length && c >= 0) && (board[r][c] == 1))
+                        {
+                            aliveCell+=1;
+                        }
+                    }
+                }
+            }
+            return aliveCell;
+        }
+
 
         // 前缀和数组
         // 303
