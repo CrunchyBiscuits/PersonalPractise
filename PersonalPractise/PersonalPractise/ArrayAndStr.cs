@@ -24,11 +24,11 @@ namespace PersonalPractise
             //}
             //return true;
 
-            for(int i = 0; i < astr.Length; i++)
+            for (int i = 0; i < astr.Length; i++)
             {
-                for(int j = i+1; j<astr.Length; j++)
+                for (int j = i + 1; j < astr.Length; j++)
                 {
-                    if(astr[i] == astr[j])
+                    if (astr[i] == astr[j])
                     {
                         return false;
                     }
@@ -73,18 +73,18 @@ namespace PersonalPractise
         {
             int index = 0;
             int space_count = 0;
-            for(int i = 0; i < length; i++)
+            for (int i = 0; i < length; i++)
             {
-                if(S[i] == ' ')
+                if (S[i] == ' ')
                 {
                     space_count++;
                 }
             }
-            char[] temp = new char[length + space_count*2];
-            
-            for(int i = 0; i < length; i++)
+            char[] temp = new char[length + space_count * 2];
+
+            for (int i = 0; i < length; i++)
             {
-                if(S[i] == ' ')
+                if (S[i] == ' ')
                 {
                     temp[index++] = '%';
                     temp[index++] = '2';
@@ -102,12 +102,12 @@ namespace PersonalPractise
         public bool CanPermutePalindrome(string s)
         {
             char[] temp = new char[123];
-            foreach(char i in s.ToCharArray())
+            foreach (char i in s.ToCharArray())
             {
                 temp[i]++;
             }
             int one = 0;
-            for(int i = 0; i < 123; i++)
+            for (int i = 0; i < 123; i++)
             {
                 if (temp[i] == 0 || temp[i] == 2)
                     continue;
@@ -130,16 +130,17 @@ namespace PersonalPractise
                     if (diffCount > 1)
                         return false;
                 }
-            }else if (Math.Abs(first.Length - second.Length) > 1)
+            }
+            else if (Math.Abs(first.Length - second.Length) > 1)
                 return false;
             else
             {
                 int index1 = 0;
                 int index2 = 0;
                 int count = 0;
-                while(index1<first.Length && index2 < second.Length)
+                while (index1 < first.Length && index2 < second.Length)
                 {
-                    Console.WriteLine(first[index1] +"," + second[index2]);
+                    Console.WriteLine(first[index1] + "," + second[index2]);
                     if (first[index1] != second[index2])
                     {
                         if (first.Length > second.Length)
@@ -171,13 +172,13 @@ namespace PersonalPractise
 
             while (index < S.Length)
             {
-                if(index == S.Length - 1)
+                if (index == S.Length - 1)
                 {
                     sbuilder.Append(S[index]);
                     sbuilder.Append(count);
                     count = 1;
                 }
-                else if(S[index] == S[index + 1])
+                else if (S[index] == S[index + 1])
                 {
                     count++;
                 }
@@ -222,12 +223,12 @@ namespace PersonalPractise
 
             //matrix[newX][newY] = temp;
             int N = matrix[0].Length;
-            for(int i = 0; i < N/2; i++)
+            for (int i = 0; i < N / 2; i++)
             {
-                for(int j = 0; j < (N + 1) / 2; j++)
+                for (int j = 0; j < (N + 1) / 2; j++)
                 {
                     int temp = matrix[i][j];
-                    matrix[i][j] = matrix[N-1-j][i];
+                    matrix[i][j] = matrix[N - 1 - j][i];
                     matrix[N - 1 - j][i] = matrix[N - 1 - i][N - 1 - j];
                     matrix[N - 1 - i][N - 1 - j] = matrix[j][N - 1 - i];
                     matrix[j][N - 1 - i] = temp;
@@ -242,11 +243,11 @@ namespace PersonalPractise
             bool[] y = new bool[matrix.Length];
             bool[] x = new bool[matrix[0].Length];
 
-            for(int i = 0; i < y.Length; i++)
+            for (int i = 0; i < y.Length; i++)
             {
-                for(int j = 0; j < x.Length; j++)
+                for (int j = 0; j < x.Length; j++)
                 {
-                    if(matrix[i][j] == 0)
+                    if (matrix[i][j] == 0)
                     {
                         y[i] = true;
                         x[j] = true;
@@ -254,7 +255,7 @@ namespace PersonalPractise
                 }
             }
 
-            for(int i = 0; i < y.Length; i++)
+            for (int i = 0; i < y.Length; i++)
             {
                 if (y[i])
                 {
@@ -265,7 +266,7 @@ namespace PersonalPractise
                 }
             }
 
-            for(int j=0; j< x.Length; j++)
+            for (int j = 0; j < x.Length; j++)
             {
                 if (x[j])
                 {
@@ -289,5 +290,112 @@ namespace PersonalPractise
                 return true;
             return false;
         }
+
+        // 字符
+        // 520 检测大写字母
+        public bool DetectCapitalUse(string word)
+        {
+            // 我的版本
+            //int n = word.Length;
+            //int count = 0;
+            //for (int i = 0; i < n; i++)
+            //{
+            //    if (word[i] >= 'A' && word[i] <= 'Z')
+            //    {
+            //        count++;
+            //    }
+            //}
+
+            //return count == n || count == 0 || (count == 1 && word[0] >= 'A' && word[0] <= 'Z');
+
+            // 大佬版本
+            int upCount = 0;
+            for (int i = 0; i < word.Length; i++)
+            {
+                // 这里检测大写数量很聪明，而且可以剪枝
+                if (char.IsUpper(word[i]) && upCount++ < i)
+                {
+                    return false;
+                }
+            }
+            return (upCount == word.Length) || (upCount <= 1);
+        }
+
+        // 回文串的定义
+        // 125 验证回文串
+        public bool IsPalindrome(string s)
+        {
+            int n = s.Length;
+            int left = 0, right = n - 1;
+
+            while (left < right)
+            {
+                while (left < right && !Char.IsLetterOrDigit(s[left]))
+                {
+                    left++;
+                }
+
+                while (left < right && !Char.IsLetterOrDigit(s[right]))
+                {
+                    right--;
+                }
+
+                if (left < right)
+                {
+                    if (Char.ToLower(s[left]) != Char.ToLower(s[right]))
+                    {
+                        return false;
+                    }
+                    left++;
+                    right--;
+                }
+            }
+
+            return true;
+        }
+        // 公共前缀
+        // 14 最长公共前缀
+        public string LongestCommonPrefix(string[] strs)
+        {
+            if (strs.Length < 1 || strs == null)
+            {
+                return "";
+            }
+            int len = strs[0].Length;
+            int count = strs.Length;
+            for (int i = 0; i < len; i++)
+            {
+                char curr = strs[0][i];
+                for (int j = 0; j < count; j++)
+                {
+                    if (i == strs[j].Length || strs[j][i] != curr)
+                    {
+                        return strs[0].Substring(0,i);
+                    }
+                }
+            }
+            return strs[0];
+        }
+        // 单词
+        // 434 
+        // 58
+        // 字符串的反转
+        // 344
+        // 541
+        // 557
+        // 151
+        // 字符的统计
+        // 387
+        // 389
+        // 383
+        // 242
+        // 49
+        // 451
+        // 423
+        // 657
+        // 551
+        // 696
+        // 467
+        // 535
     }
 }

@@ -1275,7 +1275,6 @@ namespace PersonalPractise
             return aliveCell;
         }
 
-
         // 前缀和数组
         // 303 区域和检索 - 数组不可变
         public class NumArray
