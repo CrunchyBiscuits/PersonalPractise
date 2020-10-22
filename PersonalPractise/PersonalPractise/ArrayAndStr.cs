@@ -370,20 +370,117 @@ namespace PersonalPractise
                 {
                     if (i == strs[j].Length || strs[j][i] != curr)
                     {
-                        return strs[0].Substring(0,i);
+                        return strs[0].Substring(0, i);
                     }
                 }
             }
             return strs[0];
         }
         // 单词
-        // 434 
-        // 58
+        // 434 字符串中单词字数
+        public int CountSegments(string s)
+        {
+            if (s == null || s.Length < 1)
+            {
+                return 0;
+            }
+            s.Trim();
+            string[] words = s.Trim().Split();
+            int ans = 0;
+            for (int i = 0; i < words.Length; i++)
+            {
+                string curr = words[i];
+                if (curr.Trim().Length > 0)
+                {
+                    ans++;
+                }
+            }
+
+
+            return ans;
+        }
+        // 58  最后一个单词长度
+        public int LengthOfLastWord(string s)
+        {
+            if (s == null || s.Length < 1)
+            {
+                return 0;
+            }
+            int ans = 0;
+            string[] words = s.Trim().Split();
+
+            string last = words[words.Length - 1];
+            if (last.Trim().Length == last.Length)
+            {
+                ans = last.Length;
+            }
+
+
+            return ans;
+        }
         // 字符串的反转
-        // 344
-        // 541
-        // 557
-        // 151
+        // 344 反转字符串
+        public void ReverseString(char[] s)
+        {
+            if (s == null || s.Length < 1)
+            {
+                return;
+            }
+            int left = 0;
+            int right = s.Length - 1;
+            while (left < right)
+            {
+                char temp = s[left];
+                s[left] = s[right];
+                s[right] = temp;
+                left++;
+                right--;
+            }
+        }
+        // 541 反转字符串2
+        public string ReverseStr(string s, int k)
+        {
+            char[] characters = s.ToCharArray();
+            for (int i = 0; i < s.Length; i += 2 * k)
+            {
+                int left = i, right = Math.Min(left + k - 1, characters.Length - 1);
+                while (left<right)
+                {
+                    char tmp = characters[left];
+                    characters[left] = characters[right];
+                    characters[right] = tmp;
+                    left++;
+                    right--;
+                }
+            }
+
+            return new string(characters);
+        }
+        // 557 反转字符串中的单词
+        public string ReverseWords(string s)
+        {
+            string[] strs = s.Split(" ");
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < strs.Length; i++)
+            {
+                char[] temp = strs[i].ToCharArray();
+                Array.Reverse(temp);
+                if (i == strs.Length - 1)
+                {
+                    sb.Append(new string(temp));
+                }
+                else
+                {
+                    sb.Append(new string(temp) + " ");
+                }
+            }
+            return sb.ToString();
+        }
+        // 151 翻转字符串中的单词 包含空格处理
+        public string ReverseWords(string s)
+        {
+
+        }
         // 字符的统计
         // 387
         // 389
