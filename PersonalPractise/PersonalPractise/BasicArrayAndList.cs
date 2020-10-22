@@ -1113,10 +1113,21 @@ namespace PersonalPractise
             return ans;
         }
 
-        // 48 旋转图像
+        // 48 旋转图像 一定记住结论
         public void Rotate(int[][] matrix)
         {
-
+            int n = matrix.Length;
+            for (int i = 0; i < (n + 1) / 2; i++)
+            {
+                for (int j = 0; j < n / 2; j++)
+                {
+                    int temp = matrix[n - 1 - j][i];
+                    matrix[n - 1 - j][i] = matrix[n - 1 - i][n - j - 1];
+                    matrix[n - 1 - i][n - j - 1] = matrix[j][n - 1 - i];
+                    matrix[j][n - 1 - i] = matrix[i][j];
+                    matrix[i][j] = temp;
+                }
+            }
         }
 
         // 73 矩阵置零 第一行第一列作为标记位就不要在清零的时候计算，单独列出来
@@ -1256,7 +1267,7 @@ namespace PersonalPractise
 
                         if ((r < board.Length && r >= 0) && (c < board[0].Length && c >= 0) && (board[r][c] == 1))
                         {
-                            aliveCell+=1;
+                            aliveCell += 1;
                         }
                     }
                 }
@@ -1266,8 +1277,86 @@ namespace PersonalPractise
 
 
         // 前缀和数组
-        // 303
-        // 304
-        // 238
+        // 303 区域和检索 - 数组不可变
+        public class NumArray
+        {
+            int[] prefix;
+            public NumArray(int[] nums)
+            {
+                prefix = new int[nums.Length + 1];
+                int sum = 0;
+                for (int i = 1; i < prefix.Length; i++)
+                {
+                    sum += nums[i - 1];
+                    prefix[i] = sum;
+                }
+            }
+
+            public int SumRange(int i, int j)
+            {
+                return prefix[j + 1] - prefix[i];
+            }
+        }
+
+        // 304 二维区域和检索 - 矩阵不可变， 二维版本前缀和
+        public class NumMatrix
+        {
+            int[][] prefix;
+            public NumMatrix(int[][] matrix)
+            {
+                if (matrix.Length == 0 || matrix[0].Length == 0)
+                {
+                    return;
+                }
+                prefix = new int[matrix.Length + 1][];
+                for (int i = 0; i < prefix.Length; i++)
+                {
+                    prefix[i] = new int[matrix[0].Length + 1];
+                }
+
+                for (int i = 0; i < matrix.Length; i++)
+                {
+                    for (int j = 0; j < matrix[0].Length; j++)
+                    {
+                        prefix[i + 1][j + 1] = prefix[i + 1][j] + prefix[i][j + 1] + matrix[i][j] - prefix[i][j];
+                    }
+                }
+            }
+
+            public int SumRegion(int row1, int col1, int row2, int col2)
+            {
+                return prefix[row2 + 1][col2 + 1] - prefix[row1][col2 + 1] - prefix[row2 + 1][col1] + prefix[row1][col1];
+            }
+        }
+
+        // 238 除自身以外数组的乘积 左右数组
+        public int[] ProductExceptSelf(int[] nums)
+        {
+            int length = nums.Length;
+
+            int[] L = new int[length];
+            int[] R = new int[length];
+
+            int[] answer = new int[length];
+
+            L[0] = 1;
+            for (int i = 1; i < length; i++)
+            {
+                L[i] = L[i - 1] * nums[i - 1];
+            }
+
+            R[length - 1] = 1;
+            for (int i = length - 2; i >= 0; i--)
+            {
+                R[i] = R[i + 1] * nums[i + 1];
+            }
+
+            for (int i = 0; i < length; i++)
+            {
+                answer[i] = L[i] * R[i];
+            }
+
+            return answer;
+        }
     }
 }
