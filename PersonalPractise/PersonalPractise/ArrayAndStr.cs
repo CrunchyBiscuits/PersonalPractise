@@ -444,7 +444,7 @@ namespace PersonalPractise
             for (int i = 0; i < s.Length; i += 2 * k)
             {
                 int left = i, right = Math.Min(left + k - 1, characters.Length - 1);
-                while (left<right)
+                while (left < right)
                 {
                     char tmp = characters[left];
                     characters[left] = characters[right];
@@ -477,9 +477,9 @@ namespace PersonalPractise
             return sb.ToString();
         }
         // 151 翻转字符串中的单词 包含空格处理
-        public string ReverseWords(string s)
+        public string ReverseWords2(string s)
         {
-
+            return string.Join(" ", s.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries).Reverse());
         }
         // 字符的统计
         // 387
