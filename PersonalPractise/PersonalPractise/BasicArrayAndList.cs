@@ -7,7 +7,6 @@ namespace PersonalPractise
 {
     class BasicArrayAndList
     {
-        private const int 0 = 0;
 
         // 哈希表
         // 单链表

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace PersonalPractise
@@ -481,13 +482,123 @@ namespace PersonalPractise
         {
             return string.Join(" ", s.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries).Reverse());
         }
-        // 字符的统计
-        // 387
-        // 389
-        // 383
-        // 242
-        // 49
-        // 451
+
+        // 字符的统计 
+        // 387 字符串的第一个唯一字符
+        public int FirstUniqChar(string s)
+        {
+            if (s == null || s.Length < 1)
+            {
+                return -1;
+            }
+            int[] temp = new int[26];
+            for (int i = 0; i < s.Length; i++)
+            {
+                temp[s[i] - 'a']++;
+            }
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (temp[s[i] - 'a'] == 1)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        // 389 找不同
+        public char FindTheDifference(string s, string t)
+        {
+            char ans = '';
+            int[] temp = new int[26];
+            for (int i = 0; i < t.Length; i++)
+            {
+                temp[t[i] - 'a']++;
+            }
+            for (int i = 0; i < s.Length; i++)
+            {
+                temp[s[i] - 'a']--;
+            }
+            for (int i = 0; i < temp.Length; i++)
+            {
+                if (temp[i] == 1)
+                {
+                    return (char)('a' + i);
+                }
+            }
+            return ans;
+        }
+        // 383 赎金信
+        public bool CanConstruct(string ransomNote, string magazine)
+        {
+            int[] temp = new int[26];
+            for (int i = 0; i < magazine.Length; i++)
+            {
+                temp[magazine[i] - 'a']++;
+            }
+
+            for (int i = 0; i < ransomNote.Length; i++)
+            {
+                temp[ransomNote[i] - 'a']--;
+            }
+
+            for (int i = 0; i < temp.Length; i++)
+            {
+                if (temp[i] < 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        // 242 有效的字母异位词
+        public bool IsAnagram(string s, string t)
+        {
+            int[] temp = new int[26];
+            for (int i = 0; i < s.Length; i++)
+            {
+                temp[s[i] - 'a']++;
+            }
+            for (int i = 0; i < t.Length; i++)
+            {
+                temp[t[i] - 'a']--;
+            }
+            for (int i = 0; i < temp.Length; i++)
+            {
+                if (temp[i] != 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        // 49 字母异位词分组 重点复习，通过Dictionary的方式进行添加
+        public IList<IList<string>> GroupAnagrams(string[] strs)
+        {
+            if (strs == null || strs.Length < 0)
+            {
+                return new List<IList<string>>();
+            }
+            Dictionary<string, List<string>> ans = new Dictionary<string, List<string>>();
+            for (int i = 0; i < strs.Length; i++)
+            {
+                char[] help = strs[i].ToCharArray();
+                Array.Sort(help);
+                string key = new string(help);
+                if (!ans.ContainsKey(key))
+                {
+                    ans[key] = new List<string>();
+                }
+                ans[key].Add(strs[i]);
+            }
+
+            return new List<IList<string>>(ans.Values);
+        }
+        // 451 根据字符出现频率排序 优先队列
+        public string FrequencySort(string s)
+        {
+            
+        }
         // 423
         // 657
         // 551
