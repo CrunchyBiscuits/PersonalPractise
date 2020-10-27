@@ -595,15 +595,70 @@ namespace PersonalPractise
             return new List<IList<string>>(ans.Values);
         }
         // 451 根据字符出现频率排序 优先队列
-        public string FrequencySort(string s)
+        // 657 机器人能否返回原点
+        public bool JudgeCircle(string moves)
         {
-            
+            int[] place = new int[2];
+            for (int i = 0; i < moves.Length; i++)
+            {
+                switch (moves[i])
+                {
+                    case 'R':
+                        place[1]++;
+                        break;
+                    case 'L':
+                        place[1]--;
+                        break;
+                    case 'U':
+                        place[0]--;
+                        break;
+                    default:
+                        place[0]++;
+                        break;
+                }
+            }
+            return place[0] == 0 && place[1] == 0;
         }
-        // 423
-        // 657
-        // 551
-        // 696
-        // 467
-        // 535
+
+        // 551 学生出勤记录1
+        public bool CheckRecord(string s)
+        {
+            return s.IndexOf('A') == s.LastIndexOf('A') && !s.Contains("LLL");
+        }
+
+        // 696 计数二进制字串
+        public int CountBinarySubstrings(string s)
+        {
+            return 0;
+        }
+
+
+        // 467 环绕字符串中唯一的字符
+        public int FindSubstringInWraproundString(string p)
+        {
+            return 0;
+        }
+
+
+        // 535 TinyURL的加密与解密 有很多的加密方法
+        public class Codec
+        {
+            Dictionary<string, string> map = new Dictionary<string, string>();
+            int num = 0;
+            // Encodes a URL to a shortened URL
+            public string encode(string longUrl)
+            {
+                string newUrl = "http://tinyurl.com" + num;
+                num++;
+                map.Add(newUrl, longUrl);
+                return newUrl;
+            }
+
+            // Decodes a shortened URL to its original URL.
+            public string decode(string shortUrl)
+            {
+                return map[shortUrl];
+            }
+        }
     }
 }
