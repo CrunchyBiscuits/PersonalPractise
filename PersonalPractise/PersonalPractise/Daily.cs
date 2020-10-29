@@ -296,7 +296,6 @@ namespace PersonalPractise
         }
 
 
-        // 回文字符串
         // 找所有子串
         // S.indexOf的用法
 
@@ -370,6 +369,40 @@ namespace PersonalPractise
             }
 
             return ans;
+        }
+
+        // 463 岛屿的周长
+        public int IslandPerimeter(int[][] grid)
+        {
+            int islandsCount = 0;
+            int interfaceCount = 0;
+            for (int i = 0; i < grid.Length; i++)
+            {
+                for (int j = 0; j < grid[0].Length; j++)
+                {
+                    if (grid[i][j] == 1)
+                    {
+                        islandsCount++;
+                        interfaceCount += CheckHelper(grid, i - 1, j);
+                        interfaceCount += CheckHelper(grid, i + 1, j);
+                        interfaceCount += CheckHelper(grid, i, j - 1);
+                        interfaceCount += CheckHelper(grid, i, j + 1);
+                    }
+                }
+            }
+
+            return islandsCount * 4 - interfaceCount;
+        }
+        public int CheckHelper(int[][] grid, int i, int j)
+        {
+            if (i >= 0 && i < grid.Length && j >= 0 && j < grid[0].Length)
+            {
+                if (grid[i][j] == 1)
+                {
+                    return 1;
+                }
+            }
+            return 0;
         }
     }
 }

@@ -660,5 +660,157 @@ namespace PersonalPractise
                 return map[shortUrl];
             }
         }
+
+        // 数字与字符串之间的转换
+        // 299 猜数字游戏
+        public string GetHint(string secret, string guess)
+        {
+            int bullCount = 0;
+            int cowCount = 0;
+            bool[] visited = new bool[secret.Length];
+            IList<char> helper = new List<char>();
+            for (int i = 0; i < secret.Length; i++)
+            {
+                if (secret[i] == guess[i])
+                {
+                    bullCount++;
+                    visited[i] = true;
+                }
+                else
+                {
+                    helper.Add(secret[i]);
+                }
+            }
+
+            for (int i = 0; i < secret.Length; i++)
+            {
+                if (!visited[i])
+                {
+                    if (helper.Contains(guess[i]))
+                    {
+                        helper.Remove(guess[i]);
+                        cowCount++;
+                    }
+                }
+            }
+
+
+            StringBuilder ansBuilder = new StringBuilder();
+
+            ansBuilder.Append(bullCount + "A");
+            ansBuilder.Append(cowCount + "B");
+
+            return ansBuilder.ToString();
+        }
+
+        // 506 相对名次
+        public string[] FindRelativeRanks(int[] nums)
+        {
+            if (nums == null || nums.Length < 1)
+            {
+                return new string[0];
+            }
+            int[] helper = new int[nums.Length];
+            Array.Copy(nums, helper, nums.Length);
+            Array.Sort(helper);
+
+            string[] ans = new string[nums.Length];
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int index = nums.Length - Array.IndexOf(helper, nums[i]) - 1;
+                if (index == 0)
+                {
+                    ans[i] = "Gold Medal";
+                }
+                else if (index == 1)
+                {
+                    ans[i] = "Silver Medal";
+                }
+                else if (index == 2)
+                {
+                    ans[i] = "Bronze Medal";
+                }
+                else
+                {
+                    ans[i] = (index + 1) + "";
+                }
+            }
+
+            return ans;
+        }
+
+        // 539 最小时间差 注意如何处理开头和结尾的时间
+        public int FindMinDifference(IList<string> timePoints)
+        {
+            if (timePoints == null || timePoints.Count < 2)
+            {
+                return -1;
+            }
+
+            int[] timeCount = new int[timePoints.Count];
+            for (int i = 0; i < timePoints.Count; i++)
+            {
+                string[] temp = timePoints[i].Split(":");
+                int hour2min = int.Parse(temp[0]) * 60;
+                int min = int.Parse(temp[1]);
+                timeCount[i] = hour2min + min;
+            }
+            Array.Sort(timeCount);
+            int ans = int.MaxValue;
+            for (int i = 1; i < timeCount.Length; i++)
+            {
+                int val = timeCount[i] - timeCount[i - 1];
+                ans = Math.Min(ans, val);
+            }
+
+            return Math.Min(ans, timeCount[0]+1440 - timeCount[timeCount.Length-1]);
+        }
+
+        // 553 最优除法
+        public string OptimalDivision(int[] nums)
+        {
+
+        }
+
+        // 537
+        // 592
+        // 640
+        // 38
+        // 443
+        // 8
+        // 13
+        // 12
+        // 273
+        // 165
+        // 481
+
+        // 子序列
+        // 392
+        // 524
+        // 521
+        // 552
+
+        // 高精度运算
+        // 66
+        // 67
+        // 415
+        // 43
+        // 306
+
+        // 字符串变换
+        // 482
+        // 6
+        // 68
+
+        // 字符串匹配
+        // 28
+        // 686
+        // 459
+        // 214
+
+        // 中心拓展法
+        // 5
+        // 647
     }
 }
