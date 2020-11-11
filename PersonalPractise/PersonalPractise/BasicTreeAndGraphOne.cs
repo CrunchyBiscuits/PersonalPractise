@@ -285,5 +285,95 @@ namespace PersonalPractise
             }
             return path.Peek();
         }
+
+        // 树与递归
+        // 100 相同的树
+        public bool IsSameTree(TreeNode p, TreeNode q)
+        {
+            if (p==null&&q==null)
+            {
+                return true;
+            }
+            else if (p==null||q==null)
+            {
+                return false;
+            }
+            else if (p.val != q.val)
+            {
+                return false;
+            }
+            else
+            {
+                return IsSameTree(p.left, q.left) && IsSameTree(p.right, q.right);
+            }
+        }
+        // 222 完全二叉树的节点个数
+        public int CountNodes(TreeNode root)
+        {
+            if (root == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1 + CountNodes(root.right) + CountNodes(root.left);
+            }
+        }
+        // 101 对称二叉树
+        public bool IsSymmetric(TreeNode root)
+        {
+            return helpCheckSymmetric(root,root);
+        }
+
+        public bool helpCheckSymmetric(TreeNode p, TreeNode q)
+        {
+            if (p==null&&q==null)
+            {
+                return true;
+            }
+
+            if (p==null || q==null)
+            {
+                return false;
+            }
+
+            return p.val == q.val && helpCheckSymmetric(p.left, q.right) && helpCheckSymmetric(p.right, q.left);
+        }
+        // 226
+        // 437
+        // 563
+        // 617
+        // 508
+        // 572
+        // 543
+        // 654
+        // 687
+        // 87
+
+        // 树的层次遍历
+        // 102
+        // 429
+        // 690
+        // 559
+        // 662
+        // 671
+        // 513
+        // 515
+        // 637
+        // 103
+        // 107
+        // 257
+        // 623
+        // 653
+        // 104
+        // 111
+        // 112
+        // 113
+        // 129
+        // 404
+        // 199
+        // 655
+        // 116
+        // 117
     }
 }

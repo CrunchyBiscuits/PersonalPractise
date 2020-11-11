@@ -767,13 +767,29 @@ namespace PersonalPractise
             return Math.Min(ans, timeCount[0]+1440 - timeCount[timeCount.Length-1]);
         }
 
-        // 553 最优除法
+        // 553 最优除法 数学法
         public string OptimalDivision(int[] nums)
         {
-
+            if (nums.Length == 1)
+            {
+                return nums[0] + "";
+            }
+            else if (nums.Length == 2)
+            {
+                return nums[0] + "/" + nums[1];
+            }
+            StringBuilder sb = new StringBuilder(nums[0]+"/("+nums[1]);
+            for (int i = 2; i < nums.Length; i++)
+            {
+                sb.Append("/"+nums[i]);
+            }
+            sb.Append(")");
+            return sb.ToString();
         }
 
         // 537
+
+
         // 592
         // 640
         // 38
