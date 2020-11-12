@@ -339,8 +339,32 @@ namespace PersonalPractise
 
             return p.val == q.val && helpCheckSymmetric(p.left, q.right) && helpCheckSymmetric(p.right, q.left);
         }
-        // 226
-        // 437
+        // 226 反转二叉树
+        public TreeNode InvertTree(TreeNode root)
+        {
+            if (root==null)
+            {
+                return null;
+            }
+            if (root!=null)
+            {
+                TreeNode temp = root.left;
+                root.left = root.right;
+                root.right = temp;
+            }
+            if (root.left!=null)
+            {
+                InvertTree(root.left);
+            }
+            if (root.right!=null)
+            {
+                InvertTree(root.right);
+            }
+
+            return root;
+        }
+        // 437 路径总和
+
         // 563
         // 617
         // 508
