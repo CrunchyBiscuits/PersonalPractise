@@ -364,7 +364,34 @@ namespace PersonalPractise
             return root;
         }
         // 437 路径总和
+        public int PathSum(TreeNode root, int sum)
+        {
+            Dictionary<int, int> prefixSum = new Dictionary<int, int>();
+            prefixSum.Add(0, 1);
+            return PathSumHelper(root, prefixSum, sum, 0);
+        }
 
+        public int PathSumHelper(TreeNode node, Dictionary<int,int> prefixSum, int sum, int currSum)
+        {
+            if (node==null)
+            {
+                return 0;
+            }
+
+            int res = 0;
+            currSum += node.val;
+
+            res += prefixSum.GetValueOrDefault(currSum-sum,0);
+            prefixSum[currSum] = prefixSum.GetValueOrDefault(currSum, 0) + 1;
+
+            res += PathSumHelper(node.left, prefixSum, sum, currSum);
+            res += PathSumHelper(node.right, prefixSum, sum, currSum);
+
+            // 要返回上一层，所以在结束的时候要减去当前层的数据
+            prefixSum[currSum] = prefixSum[currSum] - 1;
+
+            return res;
+        }
         // 563
         // 617
         // 508
