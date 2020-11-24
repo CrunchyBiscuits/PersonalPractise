@@ -419,5 +419,40 @@ namespace PersonalPractise
             }
             return dp0;
         }
+
+        // 1370 上升下降字符串
+        public string SortString(string s)
+        {
+            int[] help = new int[26];
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < s.Length; i++)
+            {
+                help[s[i] - 'a']++;
+            }
+
+            while (sb.Length<s.Length)
+            {
+                for (int i = 0; i < 26; i++)
+                {
+                    if (help[i]>0)
+                    {
+                        sb.Append((char)(i+'a'));
+                        help[i]--;
+                    }
+                }
+
+                for (int i = 25; i >= 0 ; i--)
+                {
+                    if (help[i]>0)
+                    {
+                        sb.Append((char)(i + 'a'));
+                        help[i]--;
+                    }
+                }
+            }
+
+
+            return sb.ToString();
+        }
     }
 }

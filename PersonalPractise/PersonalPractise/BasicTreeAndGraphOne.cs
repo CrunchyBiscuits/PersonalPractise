@@ -74,21 +74,21 @@ namespace PersonalPractise
                 return root;
             }
 
-            if (key<root.val)
+            if (key < root.val)
             {
                 root.left = DeleteNode(root.left, key);
             }
-            else if (key>root.val)
+            else if (key > root.val)
             {
                 root.right = DeleteNode(root.right, key);
             }
             else
             {
-                if (root.left==null&&root.right==null)
+                if (root.left == null && root.right == null)
                 {
                     root = null;
                 }
-                else if (root.right!=null)
+                else if (root.right != null)
                 {
                     root.val = findSuccessor(root);
                     root.right = DeleteNode(root.right, root.val);
@@ -106,7 +106,7 @@ namespace PersonalPractise
         public int findSuccessor(TreeNode root)
         {
             root = root.right;
-            while (root.left!=null)
+            while (root.left != null)
             {
                 root = root.left;
             }
@@ -127,17 +127,17 @@ namespace PersonalPractise
         // 951 反转等价二叉树
         public bool FlipEquiv(TreeNode root1, TreeNode root2)
         {
-            if (root1==null&&root2==null)
+            if (root1 == null && root2 == null)
             {
                 return true;
             }
-            else if (root1==null||root2==null||root1.val!=root2.val)
+            else if (root1 == null || root2 == null || root1.val != root2.val)
             {
                 return false;
             }
 
-            return FlipEquiv(root1.left,root2.left)&&FlipEquiv(root1.right,root2.right)||
-                FlipEquiv(root1.right,root2.left)&&FlipEquiv(root1.left,root2.right);
+            return FlipEquiv(root1.left, root2.left) && FlipEquiv(root1.right, root2.right) ||
+                FlipEquiv(root1.right, root2.left) && FlipEquiv(root1.left, root2.right);
         }
 
         // 1008 根据先序遍历构造二叉树
@@ -145,12 +145,12 @@ namespace PersonalPractise
         {
             int[] preorder;
             int n;
-            int index=0;
+            int index = 0;
             public TreeNode BstFromPreorder(int[] preorder)
             {
                 this.preorder = preorder;
                 n = preorder.Length;
-                return helper(int.MinValue,int.MaxValue);
+                return helper(int.MinValue, int.MaxValue);
             }
 
             public TreeNode helper(int lowerBound, int upperBound)
@@ -162,7 +162,7 @@ namespace PersonalPractise
 
                 int cur = preorder[index];
 
-                if (cur< lowerBound||cur>upperBound)
+                if (cur < lowerBound || cur > upperBound)
                 {
                     return null;
                 }
@@ -195,11 +195,11 @@ namespace PersonalPractise
         }
         public int MaxDepth(Node root)
         {
-            if (root==null)
+            if (root == null)
             {
                 return 0;
             }
-            else if (root.children.Count==0)
+            else if (root.children.Count == 0)
             {
                 return 1;
             }
@@ -207,30 +207,30 @@ namespace PersonalPractise
             int depth = 0;
             foreach (Node item in root.children)
             {
-                depth = Math.Max(MaxDepth(item),depth);
+                depth = Math.Max(MaxDepth(item), depth);
             }
 
 
-            return depth+1;
+            return depth + 1;
         }
 
         // 298 最长连续数列
         public int LongestConsecutive(TreeNode root)
         {
-            return LongestConsecutiveHelper(root,null,0);
+            return LongestConsecutiveHelper(root, null, 0);
         }
 
         public int LongestConsecutiveHelper(TreeNode root, TreeNode parent, int length)
         {
-            if (root==null)
+            if (root == null)
             {
                 return length;
             }
 
-            length = (parent != null && root.val == parent.val + 1) ?length+1: 1;
+            length = (parent != null && root.val == parent.val + 1) ? length + 1 : 1;
 
 
-            return Math.Max(length, Math.Max(LongestConsecutiveHelper(root.left,root,length),LongestConsecutiveHelper(root.right,root,length)));
+            return Math.Max(length, Math.Max(LongestConsecutiveHelper(root.left, root, length), LongestConsecutiveHelper(root.right, root, length)));
         }
 
         // 1028 先序遍历还原二叉树
@@ -238,18 +238,18 @@ namespace PersonalPractise
         {
             Stack<TreeNode> path = new Stack<TreeNode>();
             int pos = 0;
-            while (pos<S.Length)
+            while (pos < S.Length)
             {
                 int level = 0;
                 // 判断在第几层
-                while (S[pos]=='-')
+                while (S[pos] == '-')
                 {
                     level++;
                     pos++;
                 }
                 int value = 0;
                 // 获取需要存储的数字
-                while (pos<S.Length&&char.IsDigit(S[pos]))
+                while (pos < S.Length && char.IsDigit(S[pos]))
                 {
                     value = value * 10 + (S[pos] - '0');
                     pos++;
@@ -261,7 +261,7 @@ namespace PersonalPractise
                 // 如果等于栈的大小，说明是当前节点的左节点
                 if (level == path.Count)
                 {
-                    if (path.Count!=0)
+                    if (path.Count != 0)
                     {
                         path.Peek().left = node;
                     }
@@ -269,7 +269,7 @@ namespace PersonalPractise
                 // 如果不是，那么是路径上某一结点的右节点，那么只需要弹出栈顶，直到找到那个节点即可
                 else
                 {
-                    while (level!=path.Count)
+                    while (level != path.Count)
                     {
                         path.Pop();
                     }
@@ -279,7 +279,7 @@ namespace PersonalPractise
             }
 
             // 保留只剩一个根节点
-            while (path.Count>1)
+            while (path.Count > 1)
             {
                 path.Pop();
             }
@@ -290,11 +290,11 @@ namespace PersonalPractise
         // 100 相同的树
         public bool IsSameTree(TreeNode p, TreeNode q)
         {
-            if (p==null&&q==null)
+            if (p == null && q == null)
             {
                 return true;
             }
-            else if (p==null||q==null)
+            else if (p == null || q == null)
             {
                 return false;
             }
@@ -322,17 +322,17 @@ namespace PersonalPractise
         // 101 对称二叉树
         public bool IsSymmetric(TreeNode root)
         {
-            return helpCheckSymmetric(root,root);
+            return helpCheckSymmetric(root, root);
         }
 
         public bool helpCheckSymmetric(TreeNode p, TreeNode q)
         {
-            if (p==null&&q==null)
+            if (p == null && q == null)
             {
                 return true;
             }
 
-            if (p==null || q==null)
+            if (p == null || q == null)
             {
                 return false;
             }
@@ -342,21 +342,21 @@ namespace PersonalPractise
         // 226 反转二叉树
         public TreeNode InvertTree(TreeNode root)
         {
-            if (root==null)
+            if (root == null)
             {
                 return null;
             }
-            if (root!=null)
+            if (root != null)
             {
                 TreeNode temp = root.left;
                 root.left = root.right;
                 root.right = temp;
             }
-            if (root.left!=null)
+            if (root.left != null)
             {
                 InvertTree(root.left);
             }
-            if (root.right!=null)
+            if (root.right != null)
             {
                 InvertTree(root.right);
             }
@@ -371,9 +371,9 @@ namespace PersonalPractise
             return PathSumHelper(root, prefixSum, sum, 0);
         }
 
-        public int PathSumHelper(TreeNode node, Dictionary<int,int> prefixSum, int sum, int currSum)
+        public int PathSumHelper(TreeNode node, Dictionary<int, int> prefixSum, int sum, int currSum)
         {
-            if (node==null)
+            if (node == null)
             {
                 return 0;
             }
@@ -381,7 +381,7 @@ namespace PersonalPractise
             int res = 0;
             currSum += node.val;
 
-            res += prefixSum.GetValueOrDefault(currSum-sum,0);
+            res += prefixSum.GetValueOrDefault(currSum - sum, 0);
             prefixSum[currSum] = prefixSum.GetValueOrDefault(currSum, 0) + 1;
 
             res += PathSumHelper(node.left, prefixSum, sum, currSum);
@@ -392,7 +392,28 @@ namespace PersonalPractise
 
             return res;
         }
-        // 563
+        // 563 二叉树的坡度
+        int ans = 0;
+        public int FindTilt(TreeNode root)
+        {
+            helper(root);
+            return ans;
+        }
+        public int helper(TreeNode root)
+        {
+            if (root == null)
+            {
+                return 0;
+            }
+            else
+            {
+                int left = helper(root.left);
+                int right = helper(root.right);
+                ans += Math.Abs(left - right);
+                return left + right + root.val;
+            }
+        }
+
         // 617
         // 508
         // 572
